@@ -112,38 +112,109 @@ export default function Home() {
       </section>
 
       {/* Services Section - Premium with Staggered Animation */}
-      <section className="py-16 md:py-24 bg-gradient-to-b from-gray-50 to-white relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12 md:mb-20">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6 text-gray-900">
-              Comprehensive Services for <span className="gradient-text">Your Business</span>
+      <section className="py-12 md:py-24 bg-white relative overflow-hidden">
+        {/* Subtle background decoration */}
+        <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-blue-50/30 to-transparent pointer-events-none"></div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="mb-8 md:mb-20">
+            <div className="flex items-center gap-3 mb-4 md:mb-6">
+              <div className="h-px flex-grow bg-gradient-to-r from-transparent via-blue-200 to-blue-400"></div>
+              <span className="text-xs md:text-sm font-semibold tracking-widest text-blue-600 uppercase">Our Services</span>
+              <div className="h-px flex-grow bg-gradient-to-l from-transparent via-blue-200 to-blue-400"></div>
+            </div>
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-gray-900 text-center mb-3 md:mb-6">
+              Comprehensive Solutions for <br className="hidden sm:block" />
+              <span className="gradient-text">Modern Businesses</span>
             </h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-blue-600 to-cyan-500 mx-auto mb-4 md:mb-6"></div>
-            <p className="text-base md:text-xl text-gray-600 max-w-3xl mx-auto px-4">
-              Discover our full range of professional services designed to elevate your digital presence
+            <p className="text-sm md:text-xl text-gray-600 max-w-3xl mx-auto text-center">
+              From installation to ongoing support, we deliver end-to-end digital signage solutions
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 lg:gap-8">
             {[
-              { icon: '📱', title: 'Content Management', desc: 'Our robust CMS allows you to effortlessly manage and update your digital content, ensuring your displays always showcase the latest information.' },
-              { icon: '🎨', title: 'Art Curation', desc: 'Enhance your space with our professional art curation services, selecting pieces that align with your brand and captivate your audience.' },
-              { icon: '💬', title: 'Customer Support', desc: 'Experience unparalleled customer support with our dedicated team, ready to assist you with any inquiries or technical issues.' },
-              { icon: '🛠️', title: 'Installation', desc: 'Our expert installation team ensures your digital displays are set up for optimal performance and maximum impact.' },
-              { icon: '🖼️', title: 'Digital Canvas', desc: 'Transform your environment with our digital canvases, offering dynamic and interactive displays that engage and inspire.' },
-              { icon: '👆', title: 'Interactive Display', desc: 'Engage your audience with our interactive display solutions, designed to create immersive experiences and foster customer interaction.' },
-              { icon: '🪟', title: 'Window Display', desc: 'Maximize your storefront\'s impact with our high-visibility window displays, perfect for attracting attention in any lighting condition.' },
-              { icon: '📺', title: 'Dynamic Signage', desc: 'Our dynamic signage solutions provide versatile and eye-catching displays that adapt to your business needs.' }
+              { 
+                icon: '📱', 
+                title: 'Content Management', 
+                desc: 'Robust CMS platform for effortless content updates. Keep your displays fresh with real-time scheduling and remote management capabilities.',
+                color: 'from-blue-500 to-cyan-500'
+              },
+              { 
+                icon: '🎨', 
+                title: 'Art Curation', 
+                desc: 'Professional curation services that align with your brand identity. Transform spaces with carefully selected visual content.',
+                color: 'from-purple-500 to-pink-500'
+              },
+              { 
+                icon: '💬', 
+                title: 'Customer Support', 
+                desc: 'Dedicated support team available when you need us. Technical assistance and guidance throughout your journey.',
+                color: 'from-green-500 to-teal-500'
+              },
+              { 
+                icon: '🛠️', 
+                title: 'Installation', 
+                desc: 'Expert installation ensuring optimal performance. Professional setup for maximum impact and reliability.',
+                color: 'from-orange-500 to-red-500'
+              },
+              { 
+                icon: '🖼️', 
+                title: 'Digital Canvas', 
+                desc: 'Dynamic displays that engage and inspire. Transform environments with interactive visual experiences.',
+                color: 'from-indigo-500 to-purple-500'
+              },
+              { 
+                icon: '👆', 
+                title: 'Interactive Display', 
+                desc: 'Immersive touchscreen solutions for customer engagement. Create memorable interactive experiences.',
+                color: 'from-pink-500 to-rose-500'
+              },
+              { 
+                icon: '🪟', 
+                title: 'Window Display', 
+                desc: 'High-visibility storefront solutions. Attract attention in any lighting with our specialized window displays.',
+                color: 'from-yellow-500 to-orange-500'
+              },
+              { 
+                icon: '📺', 
+                title: 'Dynamic Signage', 
+                desc: 'Versatile displays that adapt to your needs. Eye-catching solutions for every business environment.',
+                color: 'from-cyan-500 to-blue-500'
+              }
             ].map((service, index) => (
-              <div key={index} className="premium-card p-8 rounded-2xl group cursor-pointer">
-                <div className="text-5xl mb-6 transform group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">{service.icon}</div>
-                <h3 className="text-2xl font-bold mb-4 text-gray-900 group-hover:text-blue-600 transition-colors duration-300">{service.title}</h3>
-                <p className="text-gray-600 leading-relaxed mb-4">{service.desc}</p>
-                <div className="flex items-center text-blue-600 font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  Learn more
-                  <svg className="ml-2 w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
+              <div 
+                key={index} 
+                className="group relative bg-white border border-gray-200 rounded-xl md:rounded-2xl p-4 md:p-8 hover:border-transparent hover:shadow-2xl transition-all duration-500 overflow-hidden"
+              >
+                {/* Animated gradient background on hover */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}></div>
+                
+                {/* Accent line */}
+                <div className={`absolute top-0 left-0 w-1 h-0 bg-gradient-to-b ${service.color} group-hover:h-full transition-all duration-500`}></div>
+                
+                <div className="relative z-10">
+                  <div className="flex items-start gap-3 md:gap-4 mb-2 md:mb-4">
+                    <div className="text-2xl md:text-4xl transform group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
+                      {service.icon}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-base md:text-xl font-bold text-gray-900 mb-1 md:mb-2 group-hover:text-blue-600 transition-colors duration-300">
+                        {service.title}
+                      </h3>
+                      <p className="text-gray-600 leading-relaxed text-xs md:text-sm">
+                        {service.desc}
+                      </p>
+                    </div>
+                  </div>
+                  
+                  {/* Learn more link - hidden on mobile */}
+                  <div className="hidden md:flex items-center text-sm font-semibold text-blue-600 opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300 mt-4">
+                    <span>Explore service</span>
+                    <svg className="ml-2 w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </div>
                 </div>
               </div>
             ))}
