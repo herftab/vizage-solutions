@@ -3,66 +3,98 @@ import { Product } from '@/types';
 export const products: Product[] = [
   {
     id: '1',
-    name: 'Premium Digital Canvas Display',
-    description: 'Transform your environment with our digital canvases, offering dynamic and interactive displays that engage and inspire.',
-    price: 2499.99,
-    image: '/images/digital-canvas.jpg',
-    category: 'Digital Canvas',
+    name: 'Single-Sided Display',
+    description: 'Our single-sided displays offer a sleek design perfect for indoor environments, ensuring your content is always the center of attention.',
+    price: 1899.99,
+    image: '/images/single-sided.jpg',
+    category: 'Indoor Display',
     inStock: true,
     inventory: 15,
     features: [
+      'Portrait or Landscape orientation',
+      'Ultra high brightness',
       'Commercial grade 24/7 operation',
-      '70,000+ hours lifespan',
-      'High brightness (2500 nits)',
-      'Integrated airflow system'
+      'Slim wall-mounted design'
     ]
   },
   {
     id: '2',
-    name: 'Interactive Display Solution',
-    description: 'Engage your audience with our interactive display solutions, designed to create immersive experiences and foster customer interaction.',
+    name: 'Double-Sided Display',
+    description: 'Double-sided displays maximize visibility by presenting dynamic content both inside and outside your business, even in bright sunlight.',
     price: 3299.99,
-    image: '/images/interactive-display.jpg',
-    category: 'Interactive Display',
+    image: '/images/double-sided.jpg',
+    category: 'Window Display',
     inStock: true,
     inventory: 8,
     features: [
-      'Touch-enabled interface',
-      'Multi-user support',
-      '4K resolution',
-      'Tamper-proof design'
+      'Hanging or Freestanding options',
+      'Dual Content Display capability',
+      'Sun-readable brightness (2500+ nits)',
+      'Integrated airflow cooling system'
     ]
   },
   {
     id: '3',
-    name: 'Window Display Signage',
-    description: 'Maximize your storefront impact with our high-visibility window displays, perfect for attracting attention in any lighting condition.',
-    price: 1899.99,
-    image: '/images/window-display.jpg',
-    category: 'Window Display',
+    name: 'Slim Wall Mounted Display',
+    description: 'Ultra-thin profile display perfect for modern interiors, delivering stunning visuals without taking up valuable space.',
+    price: 1599.99,
+    image: '/images/wall-mounted.jpg',
+    category: 'Indoor Display',
     inStock: true,
     inventory: 20,
     features: [
-      'Ultra-high brightness',
-      'Dual-screen capability',
-      'Weather resistant',
+      'Portrait or Landscape mounting',
+      'Ultra-slim 2-inch profile',
+      'Easy installation system',
       'Remote content management'
     ]
   },
   {
     id: '4',
-    name: 'Dynamic Signage System',
-    description: 'Our dynamic signage solutions provide versatile and eye-catching displays that adapt to your business needs.',
-    price: 1599.99,
-    image: '/images/dynamic-signage.jpg',
-    category: 'Dynamic Signage',
+    name: 'Interactive Touch Display',
+    description: 'Engage customers with responsive touch technology, perfect for wayfinding, product browsing, and interactive experiences.',
+    price: 4299.99,
+    image: '/images/interactive-touch.jpg',
+    category: 'Interactive Display',
     inStock: true,
     inventory: 12,
     features: [
-      'Flexible mounting options',
-      'Cloud-based CMS',
-      'Energy efficient',
-      'Easy content scheduling'
+      'Multi-touch capability',
+      '10-point touch recognition',
+      'Tempered glass protection',
+      'Custom software integration'
+    ]
+  },
+  {
+    id: '5',
+    name: 'External Mounted Display',
+    description: 'Weather-resistant outdoor displays built to withstand the elements while delivering crystal-clear messaging 24/7.',
+    price: 5499.99,
+    image: '/images/external-mounted.jpg',
+    category: 'Outdoor Display',
+    inStock: true,
+    inventory: 6,
+    features: [
+      'IP65 weatherproof rating',
+      'Anti-glare coating',
+      'Temperature controlled (-20°C to 50°C)',
+      'Vandal-resistant design'
+    ]
+  },
+  {
+    id: '6',
+    name: 'Premium Interactive Kiosk',
+    description: 'Full-featured interactive kiosk solution with integrated payment processing, perfect for self-service applications.',
+    price: 6999.99,
+    image: '/images/interactive-kiosk.jpg',
+    category: 'Interactive Display',
+    inStock: true,
+    inventory: 5,
+    features: [
+      'Built-in payment terminal',
+      'Printer integration ready',
+      'ADA compliant design',
+      'Custom branding options'
     ]
   }
 ];

@@ -2,6 +2,7 @@
 
 import { Product } from '@/types';
 import { useCartStore } from '@/lib/store';
+import Link from 'next/link';
 
 interface ProductCardProps {
   product: Product;
@@ -11,31 +12,63 @@ export default function ProductCard({ product }: ProductCardProps) {
   const addItem = useCartStore((state) => state.addItem);
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition">
-      <div className="h-64 bg-gray-200 flex items-center justify-center">
-        <span className="text-gray-400 text-sm">Product Image</span>
-      </div>
+    <div className="premium-card rounded-2xl overflow-hidden group">
+      <Link href={`/products/${product.id}`}>
+        <div className="h-64 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center cursor-pointer">
+          <div className="text-center">
+            <div className="text-6xl mb-2 transform group-hover:scale-110 transition-transform duration-300">
+              {product.category === 'Indoor Display' ? '📺' : 
+               product.category === 'Window Display' ? '🪟' : 
+               product.category === 'Interactive Display' ? '👆' : 
+               product.category === 'Outdoor Display' ? '🌤️' : '📱'}
+            </div>
+            <span className="text-gray-400 text-sm">View Details</span>
+          </div>
+        </div>
+      </Link>
       
       <div className="p-6">
-        <h3 className="text-xl font-semibold mb-2">{product.name}</h3>
-        <p className="text-gray-600 text-sm mb-4 line-clamp-2">{product.description}</p>
-        
-        <div className="flex items-center justify-between mb-4">
-          <span className="text-2xl font-bold text-accent">
-            ${product.price.toLocaleString()}
-          </span>
-          <span className={`text-sm ${product.inStock ? 'text-green-600' : 'text-red-600'}`}>
-            {product.inStock ? `In Stock (${product.inventory})` : 'Out of Stock'}
+        <div className="mb-2">
+          <span className="inline-block px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-medium">
+            {product.category}
           </span>
         </div>
         
-        <button
-          onClick={() => addItem(product)}
-          disabled={!product.inStock}
-          className="w-full bg-accent text-white py-2 rounded-lg hover:bg-blue-600 transition disabled:bg-gray-300 disabled:cursor-not-allowed"
-        >
-          {product.inStock ? 'Add to Cart' : 'Out of Stock'}
-        </button>
+        <Link href={`/products/${product.id}`}>
+          <h3 className="text-xl font-semibold mb-2 hover:text-blue-600 transition-colors cursor-pointer">
+            {product.name}
+          </h3>
+        </Link>
+        
+        <p className="text-gray-600 text-sm mb-4 line-clamp-2">{product.description}</p>
+        
+        <div className="flex items-center justify-between mb-4">
+          <span className="text-2xl font-bold text-gray-900">
+            ${product.price.toLocaleString()}
+          </span>
+          <span className={`text-sm font-medium ${product.inStock ? 'text-green-600' : 'text-red-600'}`}>
+            {product.inStock ? `${product.inventory} in stock` : 'Out of Stock'}
+          </span>
+        </div>
+        
+        <div className="flex gap-2">
+          <button
+            onClick={() => addItem(product)}
+            disabled={!product.inStock}
+            className="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 text-white py-2 px-4 rounded-lg hover:shadow-lg transition-all duration-300 disabled:bg-gray-300 disabled:cursor-not-allowed disabled:from-gray-300 disabled:to-gray-300"
+          >
+            {product.inStock ? 'Add to Cart' : 'Out of Stock'}
+          </button>
+          <Link
+            href={`/products/${product.id}`}
+            className="px-4 py-2 border-2 border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition-all duration-300 flex items-center justify-center"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+            </svg>
+          </Link>
+        </div>
       </div>
     </div>
   );
