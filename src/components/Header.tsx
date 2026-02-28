@@ -103,6 +103,28 @@ export default function Header() {
             </div>
             
             <Link 
+              href="/digital-canvas" 
+              className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ${
+                isActive('/digital-canvas') 
+                  ? 'text-blue-600 bg-blue-50' 
+                  : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'
+              }`}
+            >
+              Digital Canvas
+            </Link>
+            
+            <Link 
+              href="/services" 
+              className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ${
+                isActive('/services') 
+                  ? 'text-blue-600 bg-blue-50' 
+                  : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'
+              }`}
+            >
+              Services
+            </Link>
+            
+            <Link 
               href="/about" 
               className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ${
                 isActive('/about') 
@@ -206,6 +228,28 @@ export default function Header() {
                   ))}
                 </div>
               </div>
+              
+              <Link 
+                href="/digital-canvas" 
+                className={`px-4 py-3 rounded-lg font-medium transition-all ${
+                  isActive('/digital-canvas') 
+                    ? 'text-blue-600 bg-blue-50' 
+                    : 'text-gray-700 hover:bg-gray-50'
+                }`}
+              >
+                Digital Canvas
+              </Link>
+              
+              <Link 
+                href="/services" 
+                className={`px-4 py-3 rounded-lg font-medium transition-all ${
+                  isActive('/services') 
+                    ? 'text-blue-600 bg-blue-50' 
+                    : 'text-gray-700 hover:bg-gray-50'
+                }`}
+              >
+                Services
+              </Link>
               
               <Link 
                 href="/about" 

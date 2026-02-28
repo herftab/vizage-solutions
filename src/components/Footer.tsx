@@ -47,6 +47,18 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/digital-canvas" className="text-gray-300 hover:text-blue-400 transition-colors duration-300 flex items-center group">
+                  <span className="mr-2 transform group-hover:translate-x-1 transition-transform duration-300">→</span>
+                  Digital Canvas
+                </Link>
+              </li>
+              <li>
+                <Link href="/services" className="text-gray-300 hover:text-blue-400 transition-colors duration-300 flex items-center group">
+                  <span className="mr-2 transform group-hover:translate-x-1 transition-transform duration-300">→</span>
+                  Services
+                </Link>
+              </li>
+              <li>
                 <Link href="/about" className="text-gray-300 hover:text-blue-400 transition-colors duration-300 flex items-center group">
                   <span className="mr-2 transform group-hover:translate-x-1 transition-transform duration-300">→</span>
                   About Us
