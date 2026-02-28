@@ -222,37 +222,93 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Features Section - Premium with Dark Theme */}
-      <section className="py-16 md:py-24 bg-gradient-to-br from-gray-900 via-blue-900 to-black text-white relative overflow-hidden">
+      {/* Features Section - Redesigned with Unique Style */}
+      <section className="py-12 md:py-24 bg-gradient-to-br from-gray-900 via-blue-900 to-black text-white relative overflow-hidden">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-0 left-0 w-full h-full bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImRvdHMiIHdpZHRoPSI4MCIgaGVpZ2h0PSI4MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjIiIGZpbGw9IndoaXRlIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2RvdHMpIi8+PC9zdmc+')]"></div>
         </div>
         
+        {/* Gradient accent */}
+        <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-gradient-to-tr from-blue-600/20 to-transparent pointer-events-none"></div>
+        
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12 md:mb-20">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-6">
+          <div className="mb-8 md:mb-20">
+            <div className="flex items-center gap-3 mb-4 md:mb-6">
+              <div className="h-px flex-grow bg-gradient-to-r from-transparent via-blue-400/30 to-blue-400"></div>
+              <span className="text-xs md:text-sm font-semibold tracking-widest text-blue-400 uppercase">Technology</span>
+              <div className="h-px flex-grow bg-gradient-to-l from-transparent via-blue-400/30 to-blue-400"></div>
+            </div>
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-center mb-3 md:mb-6">
               Key Features of Our <span className="text-blue-400">Digital Signage</span>
             </h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-blue-400 to-cyan-400 mx-auto mb-4 md:mb-6"></div>
-            <p className="text-base md:text-xl text-gray-300 max-w-3xl mx-auto px-4">
+            <p className="text-sm md:text-xl text-gray-300 max-w-3xl mx-auto text-center">
               Industry-leading technology that sets us apart from the competition
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
             {[
-              { icon: '⚡', title: 'Commercial Grade', desc: 'Commercial Grade Product Displays able to be in use 24/7 for over 70,000 hours. No external buttons/controls (avoid tampering).' },
-              { icon: '📱', title: 'Dual Screen Display', desc: 'Engage audiences both inside and outside your business with dual screens that display different content simultaneously for maximum impact.' },
-              { icon: '🌡️', title: 'Integrated Airflow', desc: 'Equipped with an integrated airflow system, our displays maintain optimal performance and longevity, even in challenging conditions.' },
-              { icon: '🔆', title: 'High Brightness', desc: 'Our displays boast an impressive brightness level, ensuring visibility even in direct sunlight, making them ideal for storefronts and high-traffic areas.' },
-              { icon: '🖥️', title: 'Dual Screen Capability', desc: 'Engage audiences both inside and outside your business with dual screens that display different content simultaneously for maximum impact.' },
-              { icon: '❄️', title: 'Cooling System', desc: 'Equipped with an integrated airflow system, our displays maintain optimal performance and longevity, even in challenging conditions.' }
+              { 
+                icon: '⚡', 
+                title: 'Commercial Grade', 
+                desc: 'Commercial Grade Product Displays able to be in use 24/7 for over 70,000 hours. No external buttons/controls (avoid tampering).',
+                color: 'from-yellow-400 to-orange-500'
+              },
+              { 
+                icon: '📱', 
+                title: 'Dual Screen Display', 
+                desc: 'Engage audiences both inside and outside your business with dual screens that display different content simultaneously for maximum impact.',
+                color: 'from-blue-400 to-cyan-500'
+              },
+              { 
+                icon: '🌡️', 
+                title: 'Integrated Airflow', 
+                desc: 'Equipped with an integrated airflow system, our displays maintain optimal performance and longevity, even in challenging conditions.',
+                color: 'from-green-400 to-teal-500'
+              },
+              { 
+                icon: '🔆', 
+                title: 'High Brightness', 
+                desc: 'Our displays boast an impressive brightness level, ensuring visibility even in direct sunlight, making them ideal for storefronts and high-traffic areas.',
+                color: 'from-orange-400 to-red-500'
+              },
+              { 
+                icon: '🖥️', 
+                title: 'Dual Screen Capability', 
+                desc: 'Engage audiences both inside and outside your business with dual screens that display different content simultaneously for maximum impact.',
+                color: 'from-purple-400 to-pink-500'
+              },
+              { 
+                icon: '❄️', 
+                title: 'Cooling System', 
+                desc: 'Equipped with an integrated airflow system, our displays maintain optimal performance and longevity, even in challenging conditions.',
+                color: 'from-cyan-400 to-blue-500'
+              }
             ].map((feature, index) => (
-              <div key={index} className="text-center p-8 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 hover:bg-white/10 hover:border-blue-400/50 transition-all duration-300 group cursor-pointer">
-                <div className="text-6xl mb-6 transform group-hover:scale-110 group-hover:rotate-12 transition-all duration-300">{feature.icon}</div>
-                <h3 className="text-2xl font-bold mb-4">{feature.title}</h3>
-                <p className="text-gray-300 leading-relaxed">{feature.desc}</p>
+              <div 
+                key={index} 
+                className="group relative bg-white/5 backdrop-blur-sm rounded-xl md:rounded-2xl p-4 md:p-8 border border-white/10 hover:bg-white/10 hover:border-blue-400/50 transition-all duration-500 overflow-hidden"
+              >
+                {/* Animated gradient background on hover */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}></div>
+                
+                {/* Top accent line */}
+                <div className={`absolute top-0 left-0 h-1 w-0 bg-gradient-to-r ${feature.color} group-hover:w-full transition-all duration-500`}></div>
+                
+                <div className="relative z-10">
+                  <div className="flex flex-col items-center text-center">
+                    <div className="text-3xl md:text-5xl mb-3 md:mb-6 transform group-hover:scale-110 transition-transform duration-300">
+                      {feature.icon}
+                    </div>
+                    <h3 className="text-base md:text-xl font-bold mb-2 md:mb-4 group-hover:text-blue-400 transition-colors duration-300">
+                      {feature.title}
+                    </h3>
+                    <p className="text-gray-300 leading-relaxed text-xs md:text-sm">
+                      {feature.desc}
+                    </p>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
