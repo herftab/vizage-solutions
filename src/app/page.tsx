@@ -20,7 +20,7 @@ export default function Home() {
             className="absolute inset-0 bg-cover bg-center"
             style={{
               backgroundImage: "url('/images/hero-times-square.jpg')",
-              filter: 'grayscale(60%) brightness(0.4) contrast(1.1)'
+              filter: 'grayscale(30%) brightness(0.7) contrast(1.0)'
             }}
           ></div>
           {/* Dark gradient overlay for better text readability */}
@@ -37,9 +37,9 @@ export default function Home() {
             <p className="text-xs md:text-sm font-medium tracking-wider text-blue-200">EXPLORE CUTTING-EDGE DIGITAL DISPLAY SOLUTIONS</p>
           </div>
           
-          <h1 className={`text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold mb-6 md:mb-8 leading-tight ${isVisible ? 'animate-scale-in delay-200' : 'opacity-0'}`}>
+          <h1 className={`text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold mb-6 md:mb-8 leading-[1.2] ${isVisible ? 'animate-scale-in delay-200' : 'opacity-0'}`}>
             <span className="block mb-2">Welcome to</span>
-            <span className="gradient-text block">Vizage Solutions</span>
+            <span className="gradient-text block pb-2">Vizage Solutions</span>
           </h1>
           
           <p className={`text-base sm:text-lg md:text-xl lg:text-2xl mb-8 md:mb-12 max-w-4xl mx-auto text-gray-300 leading-relaxed px-4 ${isVisible ? 'animate-fade-in-up delay-400' : 'opacity-0'}`}>
