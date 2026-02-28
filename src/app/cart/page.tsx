@@ -2,6 +2,7 @@
 
 import { useCartStore } from '@/lib/store';
 import Link from 'next/link';
+import { formatPrice } from '@/lib/currency';
 
 export default function CartPage() {
   const { items, updateQuantity, removeItem, total } = useCartStore();
@@ -33,7 +34,7 @@ export default function CartPage() {
                 <div className="flex-1">
                   <h3 className="text-xl font-semibold mb-2">{item.name}</h3>
                   <p className="text-gray-600 text-sm mb-4">{item.description}</p>
-                  <p className="text-2xl font-bold text-accent">${item.price.toLocaleString()}</p>
+                  <p className="text-2xl font-bold text-accent">{formatPrice(item.price)}</p>
                 </div>
                 
                 <div className="flex items-center space-x-4">
@@ -72,7 +73,7 @@ export default function CartPage() {
             <div className="space-y-2 mb-4">
               <div className="flex justify-between">
                 <span>Subtotal</span>
-                <span>${total().toLocaleString()}</span>
+                <span>{formatPrice(total())}</span>
               </div>
               <div className="flex justify-between">
                 <span>Shipping</span>
@@ -83,7 +84,7 @@ export default function CartPage() {
             <div className="border-t pt-4 mb-6">
               <div className="flex justify-between text-xl font-bold">
                 <span>Total</span>
-                <span>${total().toLocaleString()}</span>
+                <span>{formatPrice(total())}</span>
               </div>
             </div>
             

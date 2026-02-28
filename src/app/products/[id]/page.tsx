@@ -5,6 +5,7 @@ import { products } from '@/lib/products';
 import { useCartStore } from '@/lib/store';
 import Link from 'next/link';
 import { useState } from 'react';
+import { formatPrice } from '@/lib/currency';
 
 export default function ProductDetailPage() {
   const params = useParams();
@@ -115,7 +116,7 @@ export default function ProductDetailPage() {
 
               <div className="mb-8">
                 <div className="text-4xl font-bold text-gray-900 mb-2">
-                  ${product.price.toLocaleString()}
+                  {formatPrice(product.price)}
                 </div>
                 <p className="text-gray-600">One-time payment • No hidden fees</p>
               </div>
@@ -357,7 +358,7 @@ export default function ProductDetailPage() {
                   {relatedProduct.description}
                 </p>
                 <div className="text-2xl font-bold text-blue-600">
-                  ${relatedProduct.price.toLocaleString()}
+                  {formatPrice(relatedProduct.price)}
                 </div>
               </Link>
             ))}

@@ -3,6 +3,7 @@
 import { useCartStore } from '@/lib/store';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { formatPrice } from '@/lib/currency';
 
 export default function CheckoutPage() {
   const { items, total, clearCart } = useCartStore();
@@ -120,7 +121,7 @@ export default function CheckoutPage() {
                     <p className="font-semibold">{item.name}</p>
                     <p className="text-sm text-gray-600">Qty: {item.quantity}</p>
                   </div>
-                  <p className="font-semibold">${(item.price * item.quantity).toLocaleString()}</p>
+                  <p className="font-semibold">{formatPrice(item.price * item.quantity)}</p>
                 </div>
               ))}
             </div>
@@ -128,7 +129,7 @@ export default function CheckoutPage() {
             <div className="border-t pt-4">
               <div className="flex justify-between text-xl font-bold">
                 <span>Total</span>
-                <span>${total().toLocaleString()}</span>
+                <span>{formatPrice(total())}</span>
               </div>
             </div>
           </div>

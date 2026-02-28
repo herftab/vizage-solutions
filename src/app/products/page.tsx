@@ -53,7 +53,7 @@ export default function ProductsPage() {
               <div className="text-5xl mb-4 transform group-hover:scale-110 transition-transform duration-300">🛠️</div>
               <h3 className="text-2xl font-bold mb-4 text-gray-900">We Install</h3>
               <p className="text-gray-600 leading-relaxed">
-                From mounting your display to setting up power and network access, our expert team ensures a smooth, professional installation—done right, first time, every time.
+                From mounting your display to setting up power and network access, our expert team ensures a smooth, professional installation - done right, first time, every time.
               </p>
             </div>
             
@@ -61,7 +61,7 @@ export default function ProductsPage() {
               <div className="text-5xl mb-4 transform group-hover:scale-110 transition-transform duration-300">💰</div>
               <h3 className="text-2xl font-bold mb-4 text-gray-900">We Generate Revenue</h3>
               <p className="text-gray-600 leading-relaxed">
-                We help turn your screens into revenue-generating assets by sourcing advertisers and managing campaigns—bringing you passive income without lifting a finger.
+                We help turn your screens into revenue-generating assets by sourcing advertisers and managing campaigns, bringing you passive income without lifting a finger.
               </p>
             </div>
             
