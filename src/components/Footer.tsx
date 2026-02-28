@@ -21,20 +21,6 @@ export default function Footer() {
               Transform your business with innovative digital signage and art displays, 
               designed to captivate and engage your audience with unparalleled sophistication.
             </p>
-            <div className="flex space-x-4">
-              <a href="#" className="w-10 h-10 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300 hover:scale-110">
-                <span className="text-xl">📘</span>
-              </a>
-              <a href="#" className="w-10 h-10 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300 hover:scale-110">
-                <span className="text-xl">🐦</span>
-              </a>
-              <a href="#" className="w-10 h-10 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300 hover:scale-110">
-                <span className="text-xl">💼</span>
-              </a>
-              <a href="#" className="w-10 h-10 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/20 transition-all duration-300 hover:scale-110">
-                <span className="text-xl">📷</span>
-              </a>
-            </div>
           </div>
           
           <div>
