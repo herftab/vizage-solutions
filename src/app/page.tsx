@@ -91,30 +91,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Stats Section - New Engaging Element */}
-      <section className="py-12 md:py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 text-center">
-            <div className="group cursor-pointer">
-              <div className="text-3xl md:text-5xl font-bold gradient-text mb-2 group-hover:scale-110 transition-transform duration-300">500+</div>
-              <div className="text-sm md:text-base text-gray-600 font-medium">Installations</div>
-            </div>
-            <div className="group cursor-pointer">
-              <div className="text-3xl md:text-5xl font-bold gradient-text mb-2 group-hover:scale-110 transition-transform duration-300">98%</div>
-              <div className="text-sm md:text-base text-gray-600 font-medium">Client Satisfaction</div>
-            </div>
-            <div className="group cursor-pointer">
-              <div className="text-3xl md:text-5xl font-bold gradient-text mb-2 group-hover:scale-110 transition-transform duration-300">24/7</div>
-              <div className="text-sm md:text-base text-gray-600 font-medium">Support Available</div>
-            </div>
-            <div className="group cursor-pointer">
-              <div className="text-3xl md:text-5xl font-bold gradient-text mb-2 group-hover:scale-110 transition-transform duration-300">15+</div>
-              <div className="text-sm md:text-base text-gray-600 font-medium">Years Experience</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Mission Section - Premium */}
       <section className="py-16 md:py-24 bg-white relative section-divider">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
