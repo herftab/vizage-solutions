@@ -1,38 +1,51 @@
-# Hero Image Setup
+# Hero Images Setup
 
-## Required Image
+## Required Images
 
-Please save the Times Square image you provided as:
-`hero-times-square.jpg`
+### Home Page Hero
+**Filename:** `hero-times-square.jpg`
+**Location:** `public/images/hero-times-square.jpg`
+**Description:** Times Square cityscape image
 
-Place it in this directory: `public/images/`
+### Digital Signage Page Hero
+**Filename:** `hero-digital-signage.jpg`
+**Location:** `public/images/hero-digital-signage.jpg`
+**Description:** Reception area with two digital screens on wall
+**Important:** Image is positioned at `center 40%` to ensure the two digital screens on the wall are visible and not cropped
 
 ## Image Specifications
 
-- **Filename:** `hero-times-square.jpg`
 - **Recommended size:** 1920x1080 or larger
 - **Format:** JPG or PNG
-- **Location:** `public/images/hero-times-square.jpg`
+- **Location:** `public/images/`
 
-## Current Effect Applied
+## Current Effects Applied
 
-The image will be displayed with:
-- 60% grayscale (desaturated)
+Both images are displayed with:
 - 40% brightness (darkened)
 - 110% contrast (slightly enhanced)
 - Dark gradient overlay
 - Blue tint overlay
 
-This ensures the white text stands out clearly against the background.
+This ensures white text stands out clearly against the background.
 
 ## To Change the Effect
 
-Edit `src/app/page.tsx` and modify the filter values:
+Edit the respective page file and modify the filter values:
 ```javascript
-filter: 'grayscale(60%) brightness(0.4) contrast(1.1)'
+filter: 'brightness(0.4) contrast(1.1)'
 ```
 
 Adjust these values:
-- `grayscale(0-100%)` - 0% = full color, 100% = black & white
 - `brightness(0-1)` - Lower = darker
 - `contrast(0.5-2)` - Higher = more contrast
+
+## Background Position
+
+### Home Page (Times Square)
+- `backgroundPosition: 'center center'` - Default centered
+
+### Digital Signage Page (Reception)
+- `backgroundPosition: 'center 40%'` - Positioned to show the digital screens on the wall without cropping them
+- This ensures the two screens are visible on both desktop and mobile views
+
