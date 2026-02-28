@@ -135,49 +135,82 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 lg:gap-8">
             {[
               { 
-                icon: '📱', 
+                icon: (
+                  <svg className="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="url(#gradient-blue)">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                  </svg>
+                ),
                 title: 'Content Management', 
                 desc: 'Robust CMS platform for effortless content updates. Keep your displays fresh with real-time scheduling and remote management capabilities.',
                 color: 'from-blue-500 to-cyan-500'
               },
               { 
-                icon: '🎨', 
+                icon: (
+                  <svg className="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="url(#gradient-blue)">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01" />
+                  </svg>
+                ),
                 title: 'Art Curation', 
                 desc: 'Professional curation services that align with your brand identity. Transform spaces with carefully selected visual content.',
                 color: 'from-purple-500 to-pink-500'
               },
               { 
-                icon: '💬', 
+                icon: (
+                  <svg className="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="url(#gradient-blue)">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                  </svg>
+                ),
                 title: 'Customer Support', 
                 desc: 'Dedicated support team available when you need us. Technical assistance and guidance throughout your journey.',
                 color: 'from-green-500 to-teal-500'
               },
               { 
-                icon: '🛠️', 
+                icon: (
+                  <svg className="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="url(#gradient-blue)">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                ),
                 title: 'Installation', 
                 desc: 'Expert installation ensuring optimal performance. Professional setup for maximum impact and reliability.',
                 color: 'from-orange-500 to-red-500'
               },
               { 
-                icon: '🖼️', 
+                icon: (
+                  <svg className="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="url(#gradient-blue)">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                ),
                 title: 'Digital Canvas', 
                 desc: 'Dynamic displays that engage and inspire. Transform environments with interactive visual experiences.',
                 color: 'from-indigo-500 to-purple-500'
               },
               { 
-                icon: '👆', 
+                icon: (
+                  <svg className="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="url(#gradient-blue)">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1m0 0V11m0-5.5a1.5 1.5 0 013 0v3m0 0V11" />
+                  </svg>
+                ),
                 title: 'Interactive Display', 
                 desc: 'Immersive touchscreen solutions for customer engagement. Create memorable interactive experiences.',
                 color: 'from-pink-500 to-rose-500'
               },
               { 
-                icon: '🪟', 
+                icon: (
+                  <svg className="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="url(#gradient-blue)">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                  </svg>
+                ),
                 title: 'Window Display', 
                 desc: 'High-visibility storefront solutions. Attract attention in any lighting with our specialized window displays.',
                 color: 'from-yellow-500 to-orange-500'
               },
               { 
-                icon: '📺', 
+                icon: (
+                  <svg className="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="url(#gradient-blue)">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                ),
                 title: 'Dynamic Signage', 
                 desc: 'Versatile displays that adapt to your needs. Eye-catching solutions for every business environment.',
                 color: 'from-cyan-500 to-blue-500'
@@ -187,6 +220,16 @@ export default function Home() {
                 key={index} 
                 className="group relative bg-white border border-gray-200 rounded-xl md:rounded-2xl p-4 md:p-8 hover:border-transparent hover:shadow-2xl transition-all duration-500 overflow-hidden"
               >
+                {/* SVG Gradient Definitions */}
+                <svg width="0" height="0" className="absolute">
+                  <defs>
+                    <linearGradient id="gradient-blue" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#0ea5e9" />
+                      <stop offset="100%" stopColor="#06b6d4" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+                
                 {/* Animated gradient background on hover */}
                 <div className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}></div>
                 
@@ -195,7 +238,7 @@ export default function Home() {
                 
                 <div className="relative z-10">
                   <div className="flex items-start gap-3 md:gap-4 mb-2 md:mb-4">
-                    <div className="text-2xl md:text-4xl transform group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
+                    <div className="w-8 h-8 md:w-12 md:h-12 transform group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
                       {service.icon}
                     </div>
                     <div className="flex-1 min-w-0">
@@ -250,46 +293,81 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
             {[
               { 
-                icon: '⚡', 
+                icon: (
+                  <svg className="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="url(#gradient-blue-features)">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                ),
                 title: 'Commercial Grade', 
-                desc: 'Commercial Grade Product Displays able to be in use 24/7 for over 70,000 hours. No external buttons/controls (avoid tampering).',
+                desc: 'Commercial Grade Product Displays able to be in use 24/7 for over 70,000 hours. No external buttons/controls to avoid tampering.',
                 color: 'from-yellow-400 to-orange-500'
               },
               { 
-                icon: '📱', 
+                icon: (
+                  <svg className="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="url(#gradient-blue-features)">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 18h.01" />
+                  </svg>
+                ),
                 title: 'Dual Screen Display', 
                 desc: 'Engage audiences both inside and outside your business with dual screens that display different content simultaneously for maximum impact.',
                 color: 'from-blue-400 to-cyan-500'
               },
               { 
-                icon: '🌡️', 
-                title: 'Integrated Airflow', 
-                desc: 'Equipped with an integrated airflow system, our displays maintain optimal performance and longevity, even in challenging conditions.',
-                color: 'from-green-400 to-teal-500'
-              },
-              { 
-                icon: '🔆', 
+                icon: (
+                  <svg className="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="url(#gradient-blue-features)">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                  </svg>
+                ),
                 title: 'High Brightness', 
-                desc: 'Our displays boast an impressive brightness level, ensuring visibility even in direct sunlight, making them ideal for storefronts and high-traffic areas.',
+                desc: 'Impressive brightness levels ensuring visibility even in direct sunlight, making them ideal for storefronts and high-traffic areas.',
                 color: 'from-orange-400 to-red-500'
               },
               { 
-                icon: '🖥️', 
-                title: 'Dual Screen Capability', 
-                desc: 'Engage audiences both inside and outside your business with dual screens that display different content simultaneously for maximum impact.',
+                icon: (
+                  <svg className="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="url(#gradient-blue-features)">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+                  </svg>
+                ),
+                title: 'Cooling System', 
+                desc: 'Integrated airflow system maintains optimal performance and longevity, even in challenging conditions and continuous operation.',
+                color: 'from-cyan-400 to-blue-500'
+              },
+              { 
+                icon: (
+                  <svg className="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="url(#gradient-blue-features)">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                  </svg>
+                ),
+                title: 'Remote Management', 
+                desc: 'Control and update your displays remotely from anywhere. Schedule content, monitor performance, and manage multiple screens effortlessly.',
                 color: 'from-purple-400 to-pink-500'
               },
               { 
-                icon: '❄️', 
-                title: 'Cooling System', 
-                desc: 'Equipped with an integrated airflow system, our displays maintain optimal performance and longevity, even in challenging conditions.',
-                color: 'from-cyan-400 to-blue-500'
+                icon: (
+                  <svg className="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="url(#gradient-blue-features)">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                  </svg>
+                ),
+                title: 'Weatherproof Options', 
+                desc: 'Outdoor-rated displays built to withstand harsh weather conditions. IP65 rated protection against dust and water for reliable outdoor use.',
+                color: 'from-green-400 to-teal-500'
               }
             ].map((feature, index) => (
               <div 
                 key={index} 
                 className="group relative bg-white/5 backdrop-blur-sm rounded-xl md:rounded-2xl p-4 md:p-8 border border-white/10 hover:bg-white/10 hover:border-blue-400/50 transition-all duration-500 overflow-hidden"
               >
+                {/* SVG Gradient Definitions */}
+                <svg width="0" height="0" className="absolute">
+                  <defs>
+                    <linearGradient id="gradient-blue-features" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#38bdf8" />
+                      <stop offset="100%" stopColor="#22d3ee" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+                
                 {/* Animated gradient background on hover */}
                 <div className={`absolute inset-0 bg-gradient-to-br ${feature.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}></div>
                 
@@ -298,7 +376,7 @@ export default function Home() {
                 
                 <div className="relative z-10">
                   <div className="flex flex-col items-center text-center">
-                    <div className="text-3xl md:text-5xl mb-3 md:mb-6 transform group-hover:scale-110 transition-transform duration-300">
+                    <div className="w-12 h-12 md:w-16 md:h-16 mb-3 md:mb-6 transform group-hover:scale-110 transition-transform duration-300">
                       {feature.icon}
                     </div>
                     <h3 className="text-base md:text-xl font-bold mb-2 md:mb-4 group-hover:text-blue-400 transition-colors duration-300">
