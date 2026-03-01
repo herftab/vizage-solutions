@@ -2,11 +2,11 @@ import { Product } from '@/types';
 
 export const products: Product[] = [
   {
-    id: '1',
+    id: 'single-sided-display',
     name: 'Single-Sided Display',
     description: 'Our single-sided displays offer a sleek design perfect for indoor environments, ensuring your content is always the centre of attention.',
     price: 1499.99,
-    image: '/images/single-sided.jpg',
+    image: '/images/single-sided-display.jpg',
     category: 'Indoor Display',
     inStock: true,
     inventory: 15,
@@ -18,11 +18,11 @@ export const products: Product[] = [
     ]
   },
   {
-    id: '2',
+    id: 'double-sided-display',
     name: 'Double-Sided Display',
     description: 'Double-sided displays maximise visibility by presenting dynamic content both inside and outside your business, even in bright sunlight.',
     price: 2599.99,
-    image: '/images/double-sided.jpg',
+    image: '/images/double-sided-display.jpg',
     category: 'Window Display',
     inStock: true,
     inventory: 8,
@@ -34,11 +34,11 @@ export const products: Product[] = [
     ]
   },
   {
-    id: '3',
+    id: 'slim-wall-mounted-display',
     name: 'Slim Wall Mounted Display',
     description: 'Ultra-thin profile display perfect for modern interiors, delivering stunning visuals without taking up valuable space.',
     price: 1299.99,
-    image: '/images/wall-mounted.jpg',
+    image: '/images/slim-wall-mounted-display.jpg',
     category: 'Indoor Display',
     inStock: true,
     inventory: 20,
@@ -50,11 +50,11 @@ export const products: Product[] = [
     ]
   },
   {
-    id: '4',
+    id: 'interactive-touch-display',
     name: 'Interactive Touch Display',
     description: 'Engage customers with responsive touch technology, perfect for wayfinding, product browsing, and interactive experiences.',
     price: 3399.99,
-    image: '/images/interactive-touch.jpg',
+    image: '/images/interactive-touch-display.jpg',
     category: 'Interactive Display',
     inStock: true,
     inventory: 12,
@@ -66,11 +66,11 @@ export const products: Product[] = [
     ]
   },
   {
-    id: '5',
+    id: 'external-mounted-display',
     name: 'External Mounted Display',
     description: 'Weather-resistant outdoor displays built to withstand the elements whilst delivering crystal-clear messaging 24/7.',
     price: 4399.99,
-    image: '/images/external-mounted.jpg',
+    image: '/images/external-mounted-display.jpg',
     category: 'Outdoor Display',
     inStock: true,
     inventory: 6,
@@ -82,11 +82,11 @@ export const products: Product[] = [
     ]
   },
   {
-    id: '6',
+    id: 'premium-interactive-kiosk',
     name: 'Premium Interactive Kiosk',
     description: 'Full-featured interactive kiosk solution with integrated payment processing, perfect for self-service applications.',
     price: 5599.99,
-    image: '/images/interactive-kiosk.jpg',
+    image: '/images/premium-interactive-kiosk.jpg',
     category: 'Interactive Display',
     inStock: true,
     inventory: 5,

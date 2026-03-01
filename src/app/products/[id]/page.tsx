@@ -35,7 +35,7 @@ export default function ProductDetailPage() {
 
   // Product-specific content based on ID
   const getProductContent = () => {
-    if (productId === '2') {
+    if (productId === 'double-sided-display') {
       // Double-Sided Display content
       return {
         heroTitle: 'Illuminate Your Brand with Unmatched Clarity',
@@ -175,16 +175,12 @@ export default function ProductDetailPage() {
               ))}
             </div>
             
-            <div className="aspect-square bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl flex items-center justify-center shadow-xl">
-              <div className="text-center p-8">
-                <div className="text-8xl mb-4">
-                  {product.category === 'Indoor Display' ? '📺' : 
-                   product.category === 'Window Display' ? '🪟' : 
-                   product.category === 'Interactive Display' ? '👆' : 
-                   product.category === 'Outdoor Display' ? '🌤️' : '📱'}
-                </div>
-                <p className="text-gray-600 font-medium">{product.name}</p>
-              </div>
+            <div className="aspect-square bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl flex items-center justify-center shadow-xl overflow-hidden">
+              <img 
+                src={product.image} 
+                alt={product.name}
+                className="w-full h-full object-contain p-8"
+              />
             </div>
           </div>
         </div>

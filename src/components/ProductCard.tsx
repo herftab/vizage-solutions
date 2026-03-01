@@ -15,16 +15,12 @@ export default function ProductCard({ product }: ProductCardProps) {
   return (
     <div className="premium-card rounded-2xl overflow-hidden group">
       <Link href={`/products/${product.id}`}>
-        <div className="h-64 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center cursor-pointer">
-          <div className="text-center">
-            <div className="text-6xl mb-2 transform group-hover:scale-110 transition-transform duration-300">
-              {product.category === 'Indoor Display' ? '📺' : 
-               product.category === 'Window Display' ? '🪟' : 
-               product.category === 'Interactive Display' ? '👆' : 
-               product.category === 'Outdoor Display' ? '🌤️' : '📱'}
-            </div>
-            <span className="text-gray-400 text-sm">View Details</span>
-          </div>
+        <div className="h-64 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center cursor-pointer overflow-hidden relative">
+          <img 
+            src={product.image} 
+            alt={product.name}
+            className="w-full h-full object-contain p-4 transform group-hover:scale-110 transition-transform duration-300"
+          />
         </div>
       </Link>
       

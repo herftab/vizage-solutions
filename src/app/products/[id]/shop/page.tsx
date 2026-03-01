@@ -72,7 +72,7 @@ export default function ProductShopPage() {
     };
 
     // Customize based on product type
-    if (productId === '2') {
+    if (productId === 'double-sided-display') {
       // Double-Sided Display specific options
       return {
         ...baseOptions,
@@ -83,7 +83,7 @@ export default function ProductShopPage() {
       };
     }
 
-    if (productId === '4' || productId === '6') {
+    if (productId === 'interactive-touch-display' || productId === 'premium-interactive-kiosk') {
       // Interactive displays
       return {
         ...baseOptions,
@@ -95,7 +95,7 @@ export default function ProductShopPage() {
       };
     }
 
-    if (productId === '5') {
+    if (productId === 'external-mounted-display') {
       // Outdoor display
       return {
         ...baseOptions,
@@ -347,13 +347,12 @@ export default function ProductShopPage() {
               <h2 className="text-2xl font-bold mb-6 text-gray-900">Order Summary</h2>
 
               {/* Product Image */}
-              <div className="aspect-square bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl flex items-center justify-center mb-6">
-                <div className="text-6xl">
-                  {product.category === 'Indoor Display' ? '📺' : 
-                   product.category === 'Window Display' ? '🪟' : 
-                   product.category === 'Interactive Display' ? '👆' : 
-                   product.category === 'Outdoor Display' ? '🌤️' : '📱'}
-                </div>
+              <div className="aspect-square bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl flex items-center justify-center mb-6 overflow-hidden">
+                <img 
+                  src={product.image} 
+                  alt={product.name}
+                  className="w-full h-full object-contain p-8"
+                />
               </div>
 
               <h3 className="font-semibold text-lg mb-4 text-gray-900">{product.name}</h3>
