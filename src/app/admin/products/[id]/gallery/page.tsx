@@ -51,6 +51,19 @@ export default function ProductGalleryPage() {
     setProduct(getProduct(productId));
   };
 
+  const handleFixExtensions = () => {
+    // Fix any image URLs missing .jpg extension
+    const gallery = product.gallery || [];
+    gallery.forEach((imageUrl) => {
+      if (!imageUrl.endsWith('.jpg') && !imageUrl.endsWith('.png') && !imageUrl.endsWith('.jpeg')) {
+        removeProductImage(productId, imageUrl);
+        addProductImage(productId, `${imageUrl}.jpg`);
+      }
+    });
+    setProduct(getProduct(productId));
+    alert('Image extensions fixed! Please refresh the page.');
+  };
+
   const allImages = [product.image, ...(product.gallery || [])];
 
   return (
@@ -71,7 +84,15 @@ export default function ProductGalleryPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Add New Image */}
         <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Add New Image</h2>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-semibold text-gray-900">Add New Image</h2>
+            <button
+              onClick={handleFixExtensions}
+              className="px-4 py-2 bg-green-600 text-white text-sm font-semibold rounded-lg hover:bg-green-700 transition-colors"
+            >
+              Fix Missing Extensions
+            </button>
+          </div>
           <div className="flex gap-4">
             <input
               type="text"

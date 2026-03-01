@@ -1,7 +1,7 @@
 'use client';
 
 import { useParams } from 'next/navigation';
-import { products } from '@/lib/products';
+import { useProductAdminStore } from '@/lib/product-admin-store';
 import { useCartStore } from '@/lib/store';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -10,9 +10,11 @@ import { formatPrice } from '@/lib/currency';
 export default function ProductDetailPage() {
   const params = useParams();
   const productId = params.id as string;
-  const product = products.find(p => p.id === productId);
+  const { getProduct } = useProductAdminStore();
+  const product = getProduct(productId);
   const addItem = useCartStore((state) => state.addItem);
   const [quantity, setQuantity] = useState(1);
+  const [selectedImage, setSelectedImage] = useState(0);
 
   if (!product) {
     return (
@@ -117,6 +119,9 @@ export default function ProductDetailPage() {
 
   const content = getProductContent();
 
+  // Get all images (main + gallery)
+  const allImages = product ? [product.image, ...(product.gallery || [])] : [];
+
   return (
     <div className="overflow-hidden">
       {/* Hero Section */}
@@ -148,7 +153,7 @@ export default function ProductDetailPage() {
               href="/contact"
               className="px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-xl border-2 border-white/30 hover:bg-white/20 transition-all duration-300"
             >
-              Request Quote
+              Contact Our Team
             </Link>
           </div>
         </div>
@@ -166,8 +171,9 @@ export default function ProductDetailPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
-            <div className="space-y-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-12">
+            {/* Left Column - Description */}
+            <div className="lg:col-span-1 space-y-6">
               {content.transformContent.map((paragraph, index) => (
                 <p key={index} className="text-base md:text-lg text-gray-700 leading-relaxed">
                   {paragraph}
@@ -175,12 +181,98 @@ export default function ProductDetailPage() {
               ))}
             </div>
             
-            <div className="aspect-square bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl flex items-center justify-center shadow-xl overflow-hidden">
-              <img 
-                src={product.image} 
-                alt={product.name}
-                className="w-full h-full object-contain p-8"
-              />
+            {/* Middle Column - Gallery */}
+            <div className="lg:col-span-1 space-y-4">
+              {/* Main Image Display */}
+              <div className="aspect-square bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl flex items-center justify-center shadow-xl overflow-hidden">
+                <img 
+                  src={allImages[selectedImage]} 
+                  alt={`${product.name} - Image ${selectedImage + 1}`}
+                  className="w-full h-full object-contain p-8"
+                />
+              </div>
+              
+              {/* Gallery Thumbnails */}
+              {allImages.length > 1 && (
+                <div className="grid grid-cols-5 gap-2">
+                  {allImages.map((image, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setSelectedImage(index)}
+                      className={`aspect-square bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg overflow-hidden border-2 transition-all duration-300 ${
+                        selectedImage === index 
+                          ? 'border-blue-600 shadow-lg scale-105' 
+                          : 'border-transparent hover:border-blue-300'
+                      }`}
+                    >
+                      <img 
+                        src={image} 
+                        alt={`${product.name} thumbnail ${index + 1}`}
+                        className="w-full h-full object-contain p-2"
+                      />
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Right Column - Purchase Card */}
+            <div className="lg:col-span-1">
+              <div className="bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl p-6 md:p-8 text-white shadow-2xl sticky top-4">
+                <div className="text-center mb-6">
+                  <p className="text-sm text-blue-100 mb-2">Starting from</p>
+                  <div className="text-4xl md:text-5xl font-bold mb-4">
+                    {formatPrice(product.price)}
+                  </div>
+                  <p className="text-sm text-blue-100">
+                    {product.inventory} units available
+                  </p>
+                </div>
+
+                <div className="space-y-4 mb-6">
+                  <Link
+                    href={`/products/${productId}/shop`}
+                    className="block w-full px-6 py-4 bg-white text-blue-600 font-semibold rounded-xl hover:bg-gray-100 transition-all duration-300 shadow-xl hover:scale-105 text-center"
+                  >
+                    Configure & Purchase
+                  </Link>
+                  <Link
+                    href="/contact"
+                    className="block w-full px-6 py-4 bg-white/10 backdrop-blur-sm text-white font-semibold rounded-xl border-2 border-white/30 hover:bg-white/20 transition-all duration-300 text-center"
+                  >
+                    Contact Our Team
+                  </Link>
+                </div>
+
+                <div className="pt-6 border-t border-white/20">
+                  <div className="space-y-3 text-sm">
+                    <div className="flex items-center gap-3">
+                      <svg className="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24" fill="none">
+                        <path d="M5 13l4 4L19 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                      <span>Professional Installation</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <svg className="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24" fill="none">
+                        <path d="M5 13l4 4L19 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                      <span>Lifetime Support</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <svg className="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24" fill="none">
+                        <path d="M5 13l4 4L19 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                      <span>Content Management System</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <svg className="w-5 h-5 flex-shrink-0" viewBox="0 0 24 24" fill="none">
+                        <path d="M5 13l4 4L19 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                      <span>24/7 Technical Support</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -287,29 +379,6 @@ export default function ProductDetailPage() {
             </p>
             <div className="text-4xl md:text-5xl font-bold mb-8">
               {formatPrice(product.price)}
-            </div>
-
-            {/* Quantity Selector */}
-            <div className="flex items-center justify-center gap-4 mb-8">
-              <label className="text-sm font-medium">Quantity:</label>
-              <div className="flex items-center border-2 border-white/30 rounded-lg bg-white/10">
-                <button
-                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  className="px-4 py-2 hover:bg-white/20 transition"
-                >
-                  -
-                </button>
-                <span className="px-6 py-2 font-semibold">{quantity}</span>
-                <button
-                  onClick={() => setQuantity(Math.min(product.inventory, quantity + 1))}
-                  className="px-4 py-2 hover:bg-white/20 transition"
-                >
-                  +
-                </button>
-              </div>
-              <span className="text-sm text-blue-100">
-                {product.inventory} available
-              </span>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">

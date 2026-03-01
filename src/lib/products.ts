@@ -96,5 +96,46 @@ export const products: Product[] = [
       'ADA compliant design',
       'Custom branding options'
     ]
+  },
+  {
+    id: 'textura-home-canvas',
+    name: 'Textura Home Digital Canvas',
+    description: 'Transform your home with gallery-grade digital art. The perfect blend of technology and artistry for art enthusiasts and homeowners.',
+    price: 899.99,
+    image: '/images/textura-home-canvas.jpg',
+    category: 'Digital Canvas',
+    inStock: true,
+    inventory: 25,
+    features: [
+      '1 Year Warranty',
+      'Advanced Texture-Accurate Display Technology',
+      'Control One Device',
+      'Compatible with Control4 / Crestron / Rako',
+      'Access to Vizage Solutions Image Library',
+      'Magnetic Handmade Wooden Frames (4 finishes)',
+      'Easy Installation with Mounting Template',
+      'Portrait or Landscape Orientation'
+    ]
+  },
+  {
+    id: 'textura-pro-canvas',
+    name: 'Textura Pro Digital Canvas',
+    description: 'Professional-grade digital canvas for businesses. Control multiple devices, extended warranty, and premium curation services.',
+    price: 1499.99,
+    image: '/images/textura-pro-canvas.jpg',
+    category: 'Digital Canvas',
+    inStock: true,
+    inventory: 15,
+    features: [
+      '3 Year Warranty',
+      'Advanced Texture-Accurate Display Technology',
+      'Control Multiple Devices at Once',
+      'Compatible with Control4 / Crestron / Rako',
+      'Access to Vizage Solutions Image Library',
+      'Vieunite Art Curation Subscription Compatible',
+      'Magnetic Handmade Wooden Frames (4 finishes)',
+      'Easy Installation with Mounting Template',
+      'Portrait or Landscape Orientation'
+    ]
   }
 ];

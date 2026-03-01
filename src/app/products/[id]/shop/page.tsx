@@ -2,6 +2,7 @@
 
 import { useParams, useRouter } from 'next/navigation';
 import { useProductAdminStore } from '@/lib/product-admin-store';
+import { products as staticProducts } from '@/lib/products';
 import { useCartStore } from '@/lib/store';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -12,7 +13,9 @@ export default function ProductShopPage() {
   const router = useRouter();
   const productId = params.id as string;
   const { getProduct } = useProductAdminStore();
-  const product = getProduct(productId);
+  const adminProduct = getProduct(productId);
+  const staticProduct = staticProducts.find(p => p.id === productId);
+  const product = adminProduct || staticProduct;
   const addItem = useCartStore((state) => state.addItem);
 
   // Configuration state

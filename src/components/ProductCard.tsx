@@ -6,9 +6,10 @@ import { formatPrice } from '@/lib/currency';
 
 interface ProductCardProps {
   product: Product;
+  hideLearnMore?: boolean;
 }
 
-export default function ProductCard({ product }: ProductCardProps) {
+export default function ProductCard({ product, hideLearnMore = false }: ProductCardProps) {
 
   return (
     <div className="premium-card rounded-2xl overflow-hidden group">
@@ -53,15 +54,17 @@ export default function ProductCard({ product }: ProductCardProps) {
           >
             Configure & Purchase
           </Link>
-          <Link
-            href={`/products/${product.id}`}
-            className="w-full py-2 px-4 border-2 border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition-all duration-300 flex items-center justify-center gap-2"
-          >
-            Learn More
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-            </svg>
-          </Link>
+          {!hideLearnMore && (
+            <Link
+              href={`/products/${product.id}`}
+              className="w-full py-2 px-4 border-2 border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition-all duration-300 flex items-center justify-center gap-2"
+            >
+              Learn More
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </Link>
+          )}
         </div>
       </div>
     </div>
