@@ -95,9 +95,9 @@ export default function Footer() {
             </p>
             <div className="flex space-x-6 text-sm text-gray-400">
               <Link href="/admin" className="hover:text-blue-400 transition-colors duration-300">Admin Portal</Link>
+              <Link href="/cookie-policy" className="hover:text-blue-400 transition-colors duration-300">Cookie Policy</Link>
               <a href="#" className="hover:text-blue-400 transition-colors duration-300">Privacy Policy</a>
               <a href="#" className="hover:text-blue-400 transition-colors duration-300">Terms of Service</a>
-              <a href="#" className="hover:text-blue-400 transition-colors duration-300">Cookie Policy</a>
             </div>
           </div>
         </div>

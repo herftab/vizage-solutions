@@ -9,6 +9,16 @@ export interface Product {
   inStock: boolean;
   inventory: number;
   features?: string[];
+  options?: ProductOption[]; // Product-specific options
+}
+
+export interface ProductOption {
+  id: string;
+  name: string;
+  type: 'size' | 'mounting' | 'accessory' | 'cms' | 'installation';
+  value: string;
+  label: string;
+  price: number;
 }
 
 export interface CartItem extends Product {

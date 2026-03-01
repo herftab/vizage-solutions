@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { Product } from '@/types';
+import { Product, ProductOption } from '@/types';
 import { products as initialProducts } from './products';
 
 interface ProductAdminState {
@@ -11,6 +11,9 @@ interface ProductAdminState {
   addProductImage: (id: string, imageUrl: string) => void;
   removeProductImage: (id: string, imageUrl: string) => void;
   setProductMainImage: (id: string, imageUrl: string) => void;
+  addProductOption: (productId: string, option: Omit<ProductOption, 'id'>) => void;
+  updateProductOption: (productId: string, optionId: string, updates: Partial<ProductOption>) => void;
+  removeProductOption: (productId: string, optionId: string) => void;
   getProduct: (id: string) => Product | undefined;
 }
 
@@ -67,6 +70,48 @@ export const useProductAdminStore = create<ProductAdminState>()(
         set(state => ({
           products: state.products.map(p =>
             p.id === id ? { ...p, image: imageUrl } : p
+          )
+        }));
+      },
+
+      addProductOption: (productId, option) => {
+        const newOption: ProductOption = {
+          ...option,
+          id: `opt-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
+        };
+        set(state => ({
+          products: state.products.map(p =>
+            p.id === productId
+              ? { ...p, options: [...(p.options || []), newOption] }
+              : p
+          )
+        }));
+      },
+
+      updateProductOption: (productId, optionId, updates) => {
+        set(state => ({
+          products: state.products.map(p =>
+            p.id === productId
+              ? {
+                  ...p,
+                  options: (p.options || []).map(opt =>
+                    opt.id === optionId ? { ...opt, ...updates } : opt
+                  )
+                }
+              : p
+          )
+        }));
+      },
+
+      removeProductOption: (productId, optionId) => {
+        set(state => ({
+          products: state.products.map(p =>
+            p.id === productId
+              ? {
+                  ...p,
+                  options: (p.options || []).filter(opt => opt.id !== optionId)
+                }
+              : p
           )
         }));
       },

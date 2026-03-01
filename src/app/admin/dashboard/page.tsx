@@ -133,24 +133,7 @@ export default function AdminDashboard() {
               </div>
               <div>
                 <h3 className="font-semibold text-gray-900 mb-1">Manage Products</h3>
-                <p className="text-sm text-gray-600">Edit pricing, stock, and images</p>
-              </div>
-            </div>
-          </Link>
-
-          <Link
-            href="/admin/options"
-            className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow group"
-          >
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
-                <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
-                </svg>
-              </div>
-              <div>
-                <h3 className="font-semibold text-gray-900 mb-1">Product Options</h3>
-                <p className="text-sm text-gray-600">Manage sizes, accessories, etc.</p>
+                <p className="text-sm text-gray-600">Edit pricing, stock, options, and images</p>
               </div>
             </div>
           </Link>

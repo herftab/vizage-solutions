@@ -1,7 +1,7 @@
 'use client';
 
 import { useParams, useRouter } from 'next/navigation';
-import { products } from '@/lib/products';
+import { useProductAdminStore } from '@/lib/product-admin-store';
 import { useCartStore } from '@/lib/store';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -11,17 +11,14 @@ export default function ProductShopPage() {
   const params = useParams();
   const router = useRouter();
   const productId = params.id as string;
-  const product = products.find(p => p.id === productId);
+  const { getProduct } = useProductAdminStore();
+  const product = getProduct(productId);
   const addItem = useCartStore((state) => state.addItem);
 
   // Configuration state
   const [quantity, setQuantity] = useState(1);
-  const [selectedSize, setSelectedSize] = useState('');
-  const [selectedMounting, setSelectedMounting] = useState('');
-  const [selectedOrientation, setSelectedOrientation] = useState('');
+  const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>({});
   const [selectedAccessories, setSelectedAccessories] = useState<string[]>([]);
-  const [installationRequired, setInstallationRequired] = useState(false);
-  const [contentManagement, setContentManagement] = useState('basic');
 
   if (!product) {
     return (
@@ -36,121 +33,58 @@ export default function ProductShopPage() {
     );
   }
 
-  // Product-specific configuration options
-  const getProductOptions = () => {
-    const baseOptions = {
-      sizes: [
-        { value: '32', label: '32" Display', price: 0 },
-        { value: '43', label: '43" Display', price: 200 },
-        { value: '55', label: '55" Display', price: 500 },
-        { value: '65', label: '65" Display', price: 900 },
-        { value: '75', label: '75" Display', price: 1500 }
-      ],
-      mounting: [
-        { value: 'wall', label: 'Wall Mount', price: 0 },
-        { value: 'ceiling', label: 'Ceiling Mount', price: 150 },
-        { value: 'floor', label: 'Floor Stand', price: 300 },
-        { value: 'freestanding', label: 'Freestanding', price: 450 }
-      ],
-      orientation: [
-        { value: 'landscape', label: 'Landscape', price: 0 },
-        { value: 'portrait', label: 'Portrait', price: 0 }
-      ],
-      accessories: [
-        { value: 'remote', label: 'Remote Control', price: 45 },
-        { value: 'media-player', label: 'Advanced Media Player', price: 299 },
-        { value: 'speakers', label: 'External Speakers', price: 199 },
-        { value: 'protective-cover', label: 'Protective Cover', price: 89 },
-        { value: 'extended-warranty', label: 'Extended Warranty (5 Years)', price: 499 }
-      ],
-      installation: { price: 499 },
-      contentManagement: [
-        { value: 'basic', label: 'Basic (USB Updates)', price: 0 },
-        { value: 'cloud', label: 'Cloud Management', price: 299 },
-        { value: 'premium', label: 'Premium with Analytics', price: 599 }
-      ]
-    };
-
-    // Customize based on product type
-    if (productId === 'double-sided-display') {
-      // Double-Sided Display specific options
-      return {
-        ...baseOptions,
-        mounting: [
-          { value: 'hanging', label: 'Hanging Mount', price: 0 },
-          { value: 'freestanding', label: 'Freestanding with Floor Stand', price: 450 }
-        ]
-      };
+  // Group options by type
+  const groupedOptions = (product.options || []).reduce((acc, option) => {
+    if (!acc[option.type]) {
+      acc[option.type] = [];
     }
-
-    if (productId === 'interactive-touch-display' || productId === 'premium-interactive-kiosk') {
-      // Interactive displays
-      return {
-        ...baseOptions,
-        accessories: [
-          ...baseOptions.accessories,
-          { value: 'payment-terminal', label: 'Payment Terminal Integration', price: 799 },
-          { value: 'printer', label: 'Receipt Printer', price: 349 }
-        ]
-      };
-    }
-
-    if (productId === 'external-mounted-display') {
-      // Outdoor display
-      return {
-        ...baseOptions,
-        accessories: [
-          ...baseOptions.accessories,
-          { value: 'weatherproof-enclosure', label: 'Enhanced Weatherproof Enclosure', price: 899 },
-          { value: 'heating-cooling', label: 'Advanced Climate Control', price: 1299 }
-        ]
-      };
-    }
-
-    return baseOptions;
-  };
-
-  const options = getProductOptions();
+    acc[option.type].push(option);
+    return acc;
+  }, {} as Record<string, typeof product.options>);
 
   // Calculate total price
   const calculateTotal = () => {
     let total = product.price;
 
-    // Add size price
-    const sizeOption = options.sizes.find(s => s.value === selectedSize);
-    if (sizeOption) total += sizeOption.price;
-
-    // Add mounting price
-    const mountingOption = options.mounting.find(m => m.value === selectedMounting);
-    if (mountingOption) total += mountingOption.price;
-
-    // Add accessories
-    selectedAccessories.forEach(acc => {
-      const accessory = options.accessories.find(a => a.value === acc);
-      if (accessory) total += accessory.price;
+    // Add selected options
+    Object.values(selectedOptions).forEach(optionId => {
+      const option = product.options?.find(opt => opt.id === optionId);
+      if (option) total += option.price;
     });
 
-    // Add installation
-    if (installationRequired) total += options.installation.price;
-
-    // Add content management
-    const cmOption = options.contentManagement.find(c => c.value === contentManagement);
-    if (cmOption) total += cmOption.price;
+    // Add accessories
+    selectedAccessories.forEach(accId => {
+      const accessory = product.options?.find(opt => opt.id === accId);
+      if (accessory) total += accessory.price;
+    });
 
     return total * quantity;
   };
 
-  const handleAccessoryToggle = (value: string) => {
+  const handleOptionSelect = (type: string, optionId: string) => {
+    setSelectedOptions(prev => ({
+      ...prev,
+      [type]: optionId
+    }));
+  };
+
+  const handleAccessoryToggle = (optionId: string) => {
     setSelectedAccessories(prev =>
-      prev.includes(value)
-        ? prev.filter(a => a !== value)
-        : [...prev, value]
+      prev.includes(optionId)
+        ? prev.filter(id => id !== optionId)
+        : [...prev, optionId]
     );
   };
 
   const handleAddToCart = () => {
-    if (!selectedSize || !selectedMounting || !selectedOrientation) {
-      alert('Please select all required options (Size, Mounting, Orientation)');
+    // Check if all required options are selected (size, mounting, etc.)
+    const requiredTypes = ['size', 'mounting'];
+    const missingRequired = requiredTypes.filter(type => 
+      groupedOptions[type]?.length > 0 && !selectedOptions[type]
+    );
+
+    if (missingRequired.length > 0) {
+      alert(`Please select: ${missingRequired.join(', ')}`);
       return;
     }
 
@@ -163,7 +97,9 @@ export default function ProductShopPage() {
     router.push('/cart');
   };
 
-  const isConfigurationComplete = selectedSize && selectedMounting && selectedOrientation;
+  const isConfigurationComplete = 
+    (!groupedOptions.size || selectedOptions.size) &&
+    (!groupedOptions.mounting || selectedOptions.mounting);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -196,149 +132,146 @@ export default function ProductShopPage() {
               </p>
             </div>
 
-            {/* Display Size */}
-            <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-bold text-gray-900">Display Size</h2>
-                <span className="text-sm text-red-600 font-medium">Required</span>
-              </div>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                {options.sizes.map((size) => (
-                  <button
-                    key={size.value}
-                    onClick={() => setSelectedSize(size.value)}
-                    className={`p-4 rounded-xl border-2 transition-all duration-300 ${
-                      selectedSize === size.value
-                        ? 'border-blue-600 bg-blue-50 shadow-lg'
-                        : 'border-gray-200 hover:border-blue-300 hover:bg-gray-50'
-                    }`}
-                  >
-                    <div className="font-semibold text-gray-900">{size.label}</div>
-                    <div className="text-sm text-gray-600 mt-1">
-                      {size.price > 0 ? `+${formatPrice(size.price)}` : 'Included'}
-                    </div>
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Mounting Type */}
-            <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-bold text-gray-900">Mounting Type</h2>
-                <span className="text-sm text-red-600 font-medium">Required</span>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {options.mounting.map((mount) => (
-                  <button
-                    key={mount.value}
-                    onClick={() => setSelectedMounting(mount.value)}
-                    className={`p-4 rounded-xl border-2 transition-all duration-300 text-left ${
-                      selectedMounting === mount.value
-                        ? 'border-blue-600 bg-blue-50 shadow-lg'
-                        : 'border-gray-200 hover:border-blue-300 hover:bg-gray-50'
-                    }`}
-                  >
-                    <div className="font-semibold text-gray-900">{mount.label}</div>
-                    <div className="text-sm text-gray-600 mt-1">
-                      {mount.price > 0 ? `+${formatPrice(mount.price)}` : 'Included'}
-                    </div>
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Orientation */}
-            <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-bold text-gray-900">Orientation</h2>
-                <span className="text-sm text-red-600 font-medium">Required</span>
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                {options.orientation.map((orient) => (
-                  <button
-                    key={orient.value}
-                    onClick={() => setSelectedOrientation(orient.value)}
-                    className={`p-4 rounded-xl border-2 transition-all duration-300 ${
-                      selectedOrientation === orient.value
-                        ? 'border-blue-600 bg-blue-50 shadow-lg'
-                        : 'border-gray-200 hover:border-blue-300 hover:bg-gray-50'
-                    }`}
-                  >
-                    <div className="font-semibold text-gray-900">{orient.label}</div>
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Content Management */}
-            <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Content Management System</h2>
-              <div className="space-y-3">
-                {options.contentManagement.map((cm) => (
-                  <button
-                    key={cm.value}
-                    onClick={() => setContentManagement(cm.value)}
-                    className={`w-full p-4 rounded-xl border-2 transition-all duration-300 text-left ${
-                      contentManagement === cm.value
-                        ? 'border-blue-600 bg-blue-50 shadow-lg'
-                        : 'border-gray-200 hover:border-blue-300 hover:bg-gray-50'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between">
-                      <div className="font-semibold text-gray-900">{cm.label}</div>
-                      <div className="text-sm text-gray-600">
-                        {cm.price > 0 ? `+${formatPrice(cm.price)}` : 'Included'}
+            {/* Size Options */}
+            {groupedOptions.size && groupedOptions.size.length > 0 && (
+              <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-xl font-bold text-gray-900">Display Size</h2>
+                  <span className="text-sm text-red-600 font-medium">Required</span>
+                </div>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  {groupedOptions.size.map((option) => (
+                    <button
+                      key={option.id}
+                      onClick={() => handleOptionSelect('size', option.id)}
+                      className={`p-4 rounded-xl border-2 transition-all duration-300 ${
+                        selectedOptions.size === option.id
+                          ? 'border-blue-600 bg-blue-50 shadow-lg'
+                          : 'border-gray-200 hover:border-blue-300 hover:bg-gray-50'
+                      }`}
+                    >
+                      <div className="font-semibold text-gray-900">{option.label}</div>
+                      <div className="text-sm text-gray-600 mt-1">
+                        {option.price > 0 ? `+${formatPrice(option.price)}` : 'Included'}
                       </div>
-                    </div>
-                  </button>
-                ))}
+                    </button>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
+
+            {/* Mounting Options */}
+            {groupedOptions.mounting && groupedOptions.mounting.length > 0 && (
+              <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-xl font-bold text-gray-900">Mounting Type</h2>
+                  <span className="text-sm text-red-600 font-medium">Required</span>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {groupedOptions.mounting.map((option) => (
+                    <button
+                      key={option.id}
+                      onClick={() => handleOptionSelect('mounting', option.id)}
+                      className={`p-4 rounded-xl border-2 transition-all duration-300 text-left ${
+                        selectedOptions.mounting === option.id
+                          ? 'border-blue-600 bg-blue-50 shadow-lg'
+                          : 'border-gray-200 hover:border-blue-300 hover:bg-gray-50'
+                      }`}
+                    >
+                      <div className="font-semibold text-gray-900">{option.label}</div>
+                      <div className="text-sm text-gray-600 mt-1">
+                        {option.price > 0 ? `+${formatPrice(option.price)}` : 'Included'}
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* CMS Options */}
+            {groupedOptions.cms && groupedOptions.cms.length > 0 && (
+              <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+                <h2 className="text-xl font-bold text-gray-900 mb-4">Content Management System</h2>
+                <div className="space-y-3">
+                  {groupedOptions.cms.map((option) => (
+                    <button
+                      key={option.id}
+                      onClick={() => handleOptionSelect('cms', option.id)}
+                      className={`w-full p-4 rounded-xl border-2 transition-all duration-300 text-left ${
+                        selectedOptions.cms === option.id
+                          ? 'border-blue-600 bg-blue-50 shadow-lg'
+                          : 'border-gray-200 hover:border-blue-300 hover:bg-gray-50'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="font-semibold text-gray-900">{option.label}</div>
+                        <div className="text-sm text-gray-600">
+                          {option.price > 0 ? `+${formatPrice(option.price)}` : 'Included'}
+                        </div>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
 
             {/* Accessories */}
-            <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Additional Accessories</h2>
-              <div className="space-y-3">
-                {options.accessories.map((accessory) => (
-                  <label
-                    key={accessory.value}
-                    className="flex items-center justify-between p-4 rounded-xl border-2 border-gray-200 hover:border-blue-300 hover:bg-gray-50 cursor-pointer transition-all duration-300"
-                  >
+            {groupedOptions.accessory && groupedOptions.accessory.length > 0 && (
+              <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+                <h2 className="text-xl font-bold text-gray-900 mb-4">Additional Accessories</h2>
+                <div className="space-y-3">
+                  {groupedOptions.accessory.map((option) => (
+                    <label
+                      key={option.id}
+                      className="flex items-center justify-between p-4 rounded-xl border-2 border-gray-200 hover:border-blue-300 hover:bg-gray-50 cursor-pointer transition-all duration-300"
+                    >
+                      <div className="flex items-center gap-3">
+                        <input
+                          type="checkbox"
+                          checked={selectedAccessories.includes(option.id)}
+                          onChange={() => handleAccessoryToggle(option.id)}
+                          className="w-5 h-5 text-blue-600 rounded focus:ring-blue-500"
+                        />
+                        <span className="font-medium text-gray-900">{option.label}</span>
+                      </div>
+                      <span className="text-gray-600">+{formatPrice(option.price)}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Installation */}
+            {groupedOptions.installation && groupedOptions.installation.length > 0 && (
+              <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+                <h2 className="text-xl font-bold text-gray-900 mb-4">Professional Installation</h2>
+                {groupedOptions.installation.map((option) => (
+                  <label key={option.id} className="flex items-center justify-between p-4 rounded-xl border-2 border-gray-200 hover:border-blue-300 hover:bg-gray-50 cursor-pointer transition-all duration-300">
                     <div className="flex items-center gap-3">
                       <input
                         type="checkbox"
-                        checked={selectedAccessories.includes(accessory.value)}
-                        onChange={() => handleAccessoryToggle(accessory.value)}
+                        checked={selectedOptions.installation === option.id}
+                        onChange={() => handleOptionSelect('installation', option.id)}
                         className="w-5 h-5 text-blue-600 rounded focus:ring-blue-500"
                       />
-                      <span className="font-medium text-gray-900">{accessory.label}</span>
+                      <div>
+                        <div className="font-medium text-gray-900">{option.label}</div>
+                        <div className="text-sm text-gray-600">Includes mounting, setup, and configuration</div>
+                      </div>
                     </div>
-                    <span className="text-gray-600">+{formatPrice(accessory.price)}</span>
+                    <span className="text-gray-600">+{formatPrice(option.price)}</span>
                   </label>
                 ))}
               </div>
-            </div>
+            )}
 
-            {/* Professional Installation */}
-            <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Professional Installation</h2>
-              <label className="flex items-center justify-between p-4 rounded-xl border-2 border-gray-200 hover:border-blue-300 hover:bg-gray-50 cursor-pointer transition-all duration-300">
-                <div className="flex items-center gap-3">
-                  <input
-                    type="checkbox"
-                    checked={installationRequired}
-                    onChange={(e) => setInstallationRequired(e.target.checked)}
-                    className="w-5 h-5 text-blue-600 rounded focus:ring-blue-500"
-                  />
-                  <div>
-                    <div className="font-medium text-gray-900">Professional Installation Service</div>
-                    <div className="text-sm text-gray-600">Includes mounting, setup, and configuration</div>
-                  </div>
-                </div>
-                <span className="text-gray-600">+{formatPrice(options.installation.price)}</span>
-              </label>
-            </div>
+            {/* No options configured message */}
+            {(!product.options || product.options.length === 0) && (
+              <div className="bg-white rounded-2xl shadow-lg p-12 text-center">
+                <p className="text-gray-600 mb-4">No configuration options available for this product.</p>
+                <p className="text-sm text-gray-500">Contact us for custom configurations.</p>
+              </div>
+            )}
           </div>
 
           {/* Order Summary Sidebar */}
@@ -359,52 +292,28 @@ export default function ProductShopPage() {
 
               {/* Configuration Summary */}
               <div className="space-y-3 mb-6 text-sm">
-                {selectedSize && (
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Size:</span>
-                    <span className="font-medium text-gray-900">
-                      {options.sizes.find(s => s.value === selectedSize)?.label}
-                    </span>
-                  </div>
-                )}
-                {selectedMounting && (
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Mounting:</span>
-                    <span className="font-medium text-gray-900">
-                      {options.mounting.find(m => m.value === selectedMounting)?.label}
-                    </span>
-                  </div>
-                )}
-                {selectedOrientation && (
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Orientation:</span>
-                    <span className="font-medium text-gray-900 capitalize">
-                      {selectedOrientation}
-                    </span>
-                  </div>
-                )}
-                {contentManagement && (
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">CMS:</span>
-                    <span className="font-medium text-gray-900">
-                      {options.contentManagement.find(c => c.value === contentManagement)?.label}
-                    </span>
-                  </div>
-                )}
+                {Object.entries(selectedOptions).map(([type, optionId]) => {
+                  const option = product.options?.find(opt => opt.id === optionId);
+                  if (!option) return null;
+                  return (
+                    <div key={type} className="flex justify-between">
+                      <span className="text-gray-600 capitalize">{type}:</span>
+                      <span className="font-medium text-gray-900">{option.label}</span>
+                    </div>
+                  );
+                })}
                 {selectedAccessories.length > 0 && (
                   <div className="pt-3 border-t">
                     <div className="text-gray-600 mb-2">Accessories:</div>
-                    {selectedAccessories.map(acc => (
-                      <div key={acc} className="text-gray-900 text-xs ml-2">
-                        • {options.accessories.find(a => a.value === acc)?.label}
-                      </div>
-                    ))}
-                  </div>
-                )}
-                {installationRequired && (
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Installation:</span>
-                    <span className="font-medium text-gray-900">Included</span>
+                    {selectedAccessories.map(accId => {
+                      const accessory = product.options?.find(opt => opt.id === accId);
+                      if (!accessory) return null;
+                      return (
+                        <div key={accId} className="text-gray-900 text-xs ml-2">
+                          • {accessory.label}
+                        </div>
+                      );
+                    })}
                   </div>
                 )}
               </div>

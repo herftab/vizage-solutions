@@ -179,6 +179,12 @@ export default function AdminProductsPage() {
                             Edit
                           </button>
                           <Link
+                            href={`/admin/products/${product.id}/options`}
+                            className="px-3 py-1 bg-green-600 text-white rounded-lg hover:bg-green-700 text-sm inline-block"
+                          >
+                            Options
+                          </Link>
+                          <Link
                             href={`/admin/products/${product.id}/gallery`}
                             className="px-3 py-1 bg-purple-600 text-white rounded-lg hover:bg-purple-700 text-sm"
                           >

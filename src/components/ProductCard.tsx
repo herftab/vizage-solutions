@@ -1,7 +1,6 @@
 'use client';
 
 import { Product } from '@/types';
-import { useCartStore } from '@/lib/store';
 import Link from 'next/link';
 import { formatPrice } from '@/lib/currency';
 
@@ -10,7 +9,6 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
-  const addItem = useCartStore((state) => state.addItem);
 
   return (
     <div className="premium-card rounded-2xl overflow-hidden group">
@@ -49,13 +47,12 @@ export default function ProductCard({ product }: ProductCardProps) {
         </div>
         
         <div className="flex flex-col gap-2">
-          <button
-            onClick={() => addItem(product)}
-            disabled={!product.inStock}
-            className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-2 px-4 rounded-lg hover:shadow-lg transition-all duration-300 disabled:bg-gray-300 disabled:cursor-not-allowed disabled:from-gray-300 disabled:to-gray-300"
+          <Link
+            href={`/products/${product.id}/shop`}
+            className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-2 px-4 rounded-lg hover:shadow-lg transition-all duration-300 text-center font-medium"
           >
-            {product.inStock ? 'Add to Cart' : 'Out of Stock'}
-          </button>
+            Configure & Purchase
+          </Link>
           <Link
             href={`/products/${product.id}`}
             className="w-full py-2 px-4 border-2 border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition-all duration-300 flex items-center justify-center gap-2"
