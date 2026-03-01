@@ -94,6 +94,7 @@ export default function Footer() {
               &copy; {new Date().getFullYear()} Vizage Solutions. All rights reserved.
             </p>
             <div className="flex space-x-6 text-sm text-gray-400">
+              <Link href="/admin" className="hover:text-blue-400 transition-colors duration-300">Admin Portal</Link>
               <a href="#" className="hover:text-blue-400 transition-colors duration-300">Privacy Policy</a>
               <a href="#" className="hover:text-blue-400 transition-colors duration-300">Terms of Service</a>
               <a href="#" className="hover:text-blue-400 transition-colors duration-300">Cookie Policy</a>
