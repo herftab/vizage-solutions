@@ -41,7 +41,7 @@ export default function ProductShopPage() {
     if (!acc[option.type]) {
       acc[option.type] = [];
     }
-    acc[option.type].push(option);
+    acc[option.type]!.push(option);
     return acc;
   }, {} as Record<string, typeof product.options>);
 
@@ -83,7 +83,7 @@ export default function ProductShopPage() {
     // Check if all required options are selected (size, mounting, etc.)
     const requiredTypes = ['size', 'mounting'];
     const missingRequired = requiredTypes.filter(type => 
-      groupedOptions[type]?.length > 0 && !selectedOptions[type]
+      (groupedOptions[type]?.length ?? 0) > 0 && !selectedOptions[type]
     );
 
     if (missingRequired.length > 0) {
