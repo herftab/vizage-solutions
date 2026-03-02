@@ -28,42 +28,91 @@ export default function CartPage() {
       
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2">
-          {items.map((item) => (
-            <div key={item.id} className="bg-white rounded-lg shadow-md p-6 mb-4">
-              <div className="flex items-center justify-between">
-                <div className="flex-1">
-                  <h3 className="text-xl font-semibold mb-2">{item.name}</h3>
-                  <p className="text-gray-600 text-sm mb-4">{item.description}</p>
-                  <p className="text-2xl font-bold text-accent">{formatPrice(item.price)}</p>
-                </div>
-                
-                <div className="flex items-center space-x-4">
-                  <div className="flex items-center space-x-2">
-                    <button
-                      onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                      className="bg-gray-200 px-3 py-1 rounded hover:bg-gray-300"
-                    >
-                      -
-                    </button>
-                    <span className="text-lg font-semibold w-8 text-center">{item.quantity}</span>
-                    <button
-                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                      className="bg-gray-200 px-3 py-1 rounded hover:bg-gray-300"
-                    >
-                      +
-                    </button>
+          {items.map((item) => {
+            const optionsKey = item.selectedOptions 
+              ? JSON.stringify(item.selectedOptions)
+              : 'no-options';
+            const itemPrice = item.configuredPrice || item.price;
+            
+            return (
+              <div key={`${item.id}-${optionsKey}`} className="bg-white rounded-lg shadow-md p-6 mb-4">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex-1">
+                    <h3 className="text-xl font-semibold mb-2">{item.name}</h3>
+                    <p className="text-gray-600 text-sm mb-3">{item.description}</p>
+                    
+                    {/* Display selected options */}
+                    {item.selectedOptions && (
+                      <div className="mb-3 space-y-1">
+                        {item.selectedOptions.colour && (
+                          <div className="text-sm text-gray-700">
+                            <span className="font-medium">Colour:</span> {item.selectedOptions.colour.label}
+                            {item.selectedOptions.colour.price > 0 && (
+                              <span className="text-gray-500"> (+{formatPrice(item.selectedOptions.colour.price)})</span>
+                            )}
+                          </div>
+                        )}
+                        {item.selectedOptions.size && (
+                          <div className="text-sm text-gray-700">
+                            <span className="font-medium">Size:</span> {item.selectedOptions.size.label}
+                            {item.selectedOptions.size.price > 0 && (
+                              <span className="text-gray-500"> (+{formatPrice(item.selectedOptions.size.price)})</span>
+                            )}
+                          </div>
+                        )}
+                        {item.selectedOptions.cms && (
+                          <div className="text-sm text-gray-700">
+                            <span className="font-medium">CMS Add On:</span> {item.selectedOptions.cms.label}
+                            {item.selectedOptions.cms.price > 0 && (
+                              <span className="text-gray-500"> (+{formatPrice(item.selectedOptions.cms.price)})</span>
+                            )}
+                          </div>
+                        )}
+                        {item.selectedOptions.subscription && (
+                          <div className="text-sm text-gray-700">
+                            <span className="font-medium">CMS Subscription:</span> {item.selectedOptions.subscription.label}
+                            {item.selectedOptions.subscription.price > 0 && (
+                              <span className="text-gray-500"> (+{formatPrice(item.selectedOptions.subscription.price)})</span>
+                            )}
+                          </div>
+                        )}
+                      </div>
+                    )}
+                    
+                    <div className="flex items-baseline gap-2">
+                      <p className="text-2xl font-bold text-blue-600">{formatPrice(itemPrice)}</p>
+                      <span className="text-xs text-gray-400">+ VAT</span>
+                    </div>
                   </div>
                   
-                  <button
-                    onClick={() => removeItem(item.id)}
-                    className="text-red-600 hover:text-red-800"
-                  >
-                    Remove
-                  </button>
+                  <div className="flex flex-col items-end gap-3">
+                    <div className="flex items-center space-x-2">
+                      <button
+                        onClick={() => updateQuantity(item.id, item.quantity - 1, optionsKey)}
+                        className="bg-gray-200 px-3 py-1 rounded hover:bg-gray-300 transition"
+                      >
+                        -
+                      </button>
+                      <span className="text-lg font-semibold w-8 text-center">{item.quantity}</span>
+                      <button
+                        onClick={() => updateQuantity(item.id, item.quantity + 1, optionsKey)}
+                        className="bg-gray-200 px-3 py-1 rounded hover:bg-gray-300 transition"
+                      >
+                        +
+                      </button>
+                    </div>
+                    
+                    <button
+                      onClick={() => removeItem(item.id, optionsKey)}
+                      className="text-red-600 hover:text-red-800 text-sm font-medium"
+                    >
+                      Remove
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
         
         <div className="lg:col-span-1">
@@ -75,16 +124,20 @@ export default function CartPage() {
                 <span>Subtotal</span>
                 <span>{formatPrice(total())}</span>
               </div>
+              <div className="flex justify-between text-sm text-gray-600">
+                <span>VAT (20%)</span>
+                <span>{formatPrice(total() * 0.2)}</span>
+              </div>
               <div className="flex justify-between">
                 <span>Shipping</span>
-                <span>Calculated at checkout</span>
+                <span className="text-sm">Calculated at checkout</span>
               </div>
             </div>
             
             <div className="border-t pt-4 mb-6">
               <div className="flex justify-between text-xl font-bold">
-                <span>Total</span>
-                <span>{formatPrice(total())}</span>
+                <span>Total (inc. VAT)</span>
+                <span>{formatPrice(total() * 1.2)}</span>
               </div>
             </div>
             

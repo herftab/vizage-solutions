@@ -27,6 +27,13 @@ export interface ProductOption {
 
 export interface CartItem extends Product {
   quantity: number;
+  selectedOptions?: {
+    colour?: { id: string; label: string; price: number };
+    size?: { id: string; label: string; price: number };
+    cms?: { id: string; label: string; price: number };
+    subscription?: { id: string; label: string; price: number };
+  };
+  configuredPrice?: number; // Total price including options
 }
 
 export interface Order {
