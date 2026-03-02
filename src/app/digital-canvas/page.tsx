@@ -391,15 +391,67 @@ export default function DigitalCanvasPage() {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
             {[
-              { icon: '🏨', text: 'Boutique Hotels & Hospitality' },
-              { icon: '🎬', text: 'Home & Commercial Cinema Rooms' },
-              { icon: '🛍️', text: 'Retail Flagships & Pop-Up Installations' },
-              { icon: '💼', text: 'Office Reception & Boardrooms' },
-              { icon: '🏠', text: 'High-End Residential Interiors' },
-              { icon: '🖥️', text: 'Hybrid Workspaces & Showrooms' }
+              { 
+                icon: (
+                  <svg className="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="url(#gradient-purple-apps)">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                  </svg>
+                ),
+                text: 'Boutique Hotels & Hospitality' 
+              },
+              { 
+                icon: (
+                  <svg className="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="url(#gradient-purple-apps)">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" />
+                  </svg>
+                ),
+                text: 'Home & Commercial Cinema Rooms' 
+              },
+              { 
+                icon: (
+                  <svg className="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="url(#gradient-purple-apps)">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                  </svg>
+                ),
+                text: 'Retail Flagships & Pop-Up Installations' 
+              },
+              { 
+                icon: (
+                  <svg className="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="url(#gradient-purple-apps)">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                ),
+                text: 'Office Reception & Boardrooms' 
+              },
+              { 
+                icon: (
+                  <svg className="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="url(#gradient-purple-apps)">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                  </svg>
+                ),
+                text: 'High-End Residential Interiors' 
+              },
+              { 
+                icon: (
+                  <svg className="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="url(#gradient-purple-apps)">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                ),
+                text: 'Hybrid Workspaces & Showrooms' 
+              }
             ].map((app, index) => (
               <div key={index} className="bg-white rounded-xl p-6 text-center shadow-md hover:shadow-xl transition-all duration-300 group cursor-pointer">
-                <div className="text-4xl mb-3 transform group-hover:scale-110 transition-transform duration-300">{app.icon}</div>
+                <svg width="0" height="0" className="absolute">
+                  <defs>
+                    <linearGradient id="gradient-purple-apps" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#a855f7" />
+                      <stop offset="100%" stopColor="#ec4899" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+                <div className="w-16 h-16 mx-auto mb-4 transform group-hover:scale-110 transition-transform duration-300">
+                  {app.icon}
+                </div>
                 <p className="font-semibold text-gray-900">{app.text}</p>
               </div>
             ))}
@@ -463,13 +515,13 @@ export default function DigitalCanvasPage() {
               href="/contact"
               className="inline-flex items-center justify-center px-10 py-4 bg-white text-purple-700 font-semibold rounded-xl hover:bg-gray-100 transition-all duration-300 shadow-xl hover:scale-105"
             >
-              Get Started Today
+              Contact Our Team
               <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
             </Link>
             <Link 
-              href="/products"
+              href="/shop"
               className="inline-flex items-center justify-center px-10 py-4 bg-transparent text-white font-semibold rounded-xl border-2 border-white hover:bg-white hover:text-purple-700 transition-all duration-300"
             >
               View All Products

@@ -77,6 +77,17 @@ export default function Header() {
             </Link>
             
             <Link 
+              href="/shop" 
+              className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ${
+                isActive('/shop') 
+                  ? 'text-blue-600 bg-blue-50' 
+                  : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'
+              }`}
+            >
+              Shop
+            </Link>
+            
+            <Link 
               href="/about" 
               className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ${
                 isActive('/about') 
@@ -187,6 +198,17 @@ export default function Header() {
                 }`}
               >
                 Services
+              </Link>
+              
+              <Link 
+                href="/shop" 
+                className={`px-4 py-3 rounded-lg font-medium transition-all ${
+                  isActive('/shop') 
+                    ? 'text-blue-600 bg-blue-50' 
+                    : 'text-gray-700 hover:bg-gray-50'
+                }`}
+              >
+                Shop
               </Link>
               
               <Link 
