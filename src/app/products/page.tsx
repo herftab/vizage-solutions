@@ -6,9 +6,8 @@ import { useProductAdminStore } from '@/lib/product-admin-store';
 import Link from 'next/link';
 
 export default function ProductsPage() {
-  // Get products from admin store if available, otherwise use static products
-  const adminProducts = useProductAdminStore((state) => state.products);
-  const products = adminProducts.length > 0 ? adminProducts : staticProducts;
+  // Always use static products as the base
+  const products = staticProducts;
   
   // Filter to only show Digital Signage products (not Digital Canvas)
   const signageProducts = products.filter(p => 

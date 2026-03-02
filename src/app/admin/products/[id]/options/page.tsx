@@ -5,42 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { useAdminStore } from '@/lib/admin-store';
 import Link from 'next/link';
 import { formatPrice } from '@/lib/currency';
-
-interface ProductOption {
-  id: string;
-  type: 'colour' | 'size' | 'cms' | 'subscription';
-  name: string;
-  value: string;
-  label: string;
-  price: number;
-  enabled: boolean; // Whether this option is visible on the product page
-}
-
-const getDefaultOptions = (productId: string): ProductOption[] => {
-  if (typeof window !== 'undefined') {
-    const stored = localStorage.getItem(`productOptions_${productId}`);
-    if (stored) {
-      try {
-        return JSON.parse(stored);
-      } catch (e) {
-        console.error('Failed to parse stored options:', e);
-      }
-    }
-  }
-
-  return [
-    { id: 'colour-black', type: 'colour', name: 'Colour', value: 'black', label: 'Black', price: 0, enabled: true },
-    { id: 'colour-white', type: 'colour', name: 'Colour', value: 'white', label: 'White', price: 0, enabled: true },
-    { id: 'size-49', type: 'size', name: 'Size', value: '49', label: '49"', price: 0, enabled: true },
-    { id: 'size-55', type: 'size', name: 'Size', value: '55', label: '55"', price: 500, enabled: true },
-    { id: 'cms-yes', type: 'cms', name: 'CMS Add On', value: 'yes', label: 'Yes', price: 299, enabled: true },
-    { id: 'cms-no', type: 'cms', name: 'CMS Add On', value: 'no', label: 'No', price: 0, enabled: true },
-    { id: 'subscription-na', type: 'subscription', name: 'CMS Subscription', value: 'na', label: 'N/A', price: 0, enabled: true },
-    { id: 'subscription-1year', type: 'subscription', name: 'CMS Subscription', value: '1year', label: '1 Year', price: 199, enabled: true },
-    { id: 'subscription-3years', type: 'subscription', name: 'CMS Subscription', value: '3years', label: '3 Years', price: 499, enabled: true },
-    { id: 'subscription-unlimited', type: 'subscription', name: 'CMS Subscription', value: 'unlimited', label: 'Unlimited', price: 999, enabled: true },
-  ];
-};
+import { getProductOptions, ProductOption } from '@/lib/product-options';
 
 export default function ProductOptionsPage() {
   const params = useParams();
@@ -60,7 +25,7 @@ export default function ProductOptionsPage() {
   }, [isAuthenticated, router]);
 
   useEffect(() => {
-    setOptions(getDefaultOptions(productId));
+    setOptions(getProductOptions(productId));
   }, [productId]);
 
   if (!isAuthenticated) {
@@ -143,9 +108,13 @@ export default function ProductOptionsPage() {
             </svg>
             <div>
               <h3 className="font-semibold text-blue-900 mb-1">Product-Specific Configuration Options</h3>
-              <p className="text-sm text-blue-800">
+              <p className="text-sm text-blue-800 mb-2">
                 These options are specific to <strong>{productId}</strong>. 
                 Changes here will only affect this product's configuration page and won't impact other products.
+              </p>
+              <p className="text-sm text-blue-800">
+                <strong>Note:</strong> Default prices are set in <code className="bg-blue-100 px-1 rounded">src/lib/product-options.ts</code>. 
+                Changes made here are stored in localStorage and will override defaults until cleared.
               </p>
             </div>
           </div>
