@@ -1,10 +1,20 @@
 'use client';
 
 import ProductCard from '@/components/ProductCard';
-import { products } from '@/lib/products';
+import { products as staticProducts } from '@/lib/products';
+import { useProductAdminStore } from '@/lib/product-admin-store';
 import Link from 'next/link';
 
 export default function ProductsPage() {
+  // Get products from admin store if available, otherwise use static products
+  const adminProducts = useProductAdminStore((state) => state.products);
+  const products = adminProducts.length > 0 ? adminProducts : staticProducts;
+  
+  // Filter to only show Digital Signage products (not Digital Canvas)
+  const signageProducts = products.filter(p => 
+    p.category !== 'Digital Canvas'
+  );
+  
   return (
     <div className="overflow-hidden">
       {/* Hero Section with Background Image */}
@@ -295,7 +305,7 @@ export default function ProductsPage() {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {products.filter(p => p.category !== 'Digital Canvas').map((product) => (
+            {signageProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>

@@ -1,27 +1,114 @@
 'use client';
 
 import { useParams, useRouter } from 'next/navigation';
-import { useProductAdminStore } from '@/lib/product-admin-store';
 import { products as staticProducts } from '@/lib/products';
+import { useProductAdminStore } from '@/lib/product-admin-store';
 import { useCartStore } from '@/lib/store';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { formatPrice } from '@/lib/currency';
+
+// Define option types
+interface ProductOption {
+  id: string;
+  type: 'colour' | 'size' | 'cms' | 'subscription';
+  name: string;
+  value: string;
+  label: string;
+  price: number;
+}
+
+// Default options structure for all products
+const getDefaultOptions = (): ProductOption[] => {
+  // Try to load from localStorage first
+  if (typeof window !== 'undefined') {
+    const stored = localStorage.getItem('productOptions');
+    if (stored) {
+      try {
+        return JSON.parse(stored);
+      } catch (e) {
+        console.error('Failed to parse stored options:', e);
+      }
+    }
+  }
+
+  // Return default options if nothing in localStorage
+  return [
+    // Colour options
+    { id: 'colour-black', type: 'colour', name: 'Colour', value: 'black', label: 'Black', price: 0 },
+    { id: 'colour-white', type: 'colour', name: 'Colour', value: 'white', label: 'White', price: 0 },
+    
+    // Size options
+    { id: 'size-49', type: 'size', name: 'Size', value: '49', label: '49"', price: 0 },
+    { id: 'size-55', type: 'size', name: 'Size', value: '55', label: '55"', price: 500 },
+    
+    // CMS Add On options
+    { id: 'cms-yes', type: 'cms', name: 'CMS Add On', value: 'yes', label: 'Yes', price: 299 },
+    { id: 'cms-no', type: 'cms', name: 'CMS Add On', value: 'no', label: 'No', price: 0 },
+    
+    // CMS Subscription options
+    { id: 'subscription-na', type: 'subscription', name: 'CMS Subscription', value: 'na', label: 'N/A', price: 0 },
+    { id: 'subscription-1year', type: 'subscription', name: 'CMS Subscription', value: '1year', label: '1 Year', price: 199 },
+    { id: 'subscription-3years', type: 'subscription', name: 'CMS Subscription', value: '3years', label: '3 Years', price: 499 },
+    { id: 'subscription-unlimited', type: 'subscription', name: 'CMS Subscription', value: 'unlimited', label: 'Unlimited', price: 999 },
+  ];
+};
 
 export default function ProductShopPage() {
   const params = useParams();
   const router = useRouter();
   const productId = params.id as string;
-  const { getProduct } = useProductAdminStore();
-  const adminProduct = getProduct(productId);
+  
+  // Get product from admin store if available, otherwise use static products
+  const getAdminProduct = useProductAdminStore((state) => state.getProduct);
+  const adminProduct = getAdminProduct(productId);
   const staticProduct = staticProducts.find(p => p.id === productId);
   const product = adminProduct || staticProduct;
+  
   const addItem = useCartStore((state) => state.addItem);
 
-  // Configuration state
+  const [options, setOptions] = useState<ProductOption[]>([]);
   const [quantity, setQuantity] = useState(1);
-  const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>({});
-  const [selectedAccessories, setSelectedAccessories] = useState<string[]>([]);
+  const [selectedColour, setSelectedColour] = useState<string>('');
+  const [selectedSize, setSelectedSize] = useState<string>('');
+  const [selectedCMS, setSelectedCMS] = useState<string>('');
+  const [selectedSubscription, setSelectedSubscription] = useState<string>('');
+
+  // Load options on mount
+  useEffect(() => {
+    const loadedOptions = getDefaultOptions();
+    setOptions(loadedOptions);
+    
+    // Set default selections
+    const defaultColour = loadedOptions.find(o => o.type === 'colour');
+    const defaultSize = loadedOptions.find(o => o.type === 'size');
+    const defaultCMS = loadedOptions.find(o => o.type === 'cms' && o.value === 'no');
+    
+    if (defaultColour) setSelectedColour(defaultColour.id);
+    if (defaultSize) setSelectedSize(defaultSize.id);
+    if (defaultCMS) {
+      setSelectedCMS(defaultCMS.id);
+      // Set subscription to N/A by default
+      const naSubscription = loadedOptions.find(o => o.type === 'subscription' && o.value === 'na');
+      if (naSubscription) setSelectedSubscription(naSubscription.id);
+    }
+  }, []);
+
+  // Update subscription when CMS selection changes
+  useEffect(() => {
+    const cmsOption = options.find(o => o.id === selectedCMS);
+    if (cmsOption) {
+      if (cmsOption.value === 'no') {
+        // Set to N/A
+        const naOption = options.find(o => o.type === 'subscription' && o.value === 'na');
+        if (naOption) setSelectedSubscription(naOption.id);
+      } else if (cmsOption.value === 'yes' && selectedSubscription === options.find(o => o.value === 'na')?.id) {
+        // If switching to Yes and currently on N/A, select first paid option
+        const firstPaidOption = options.find(o => o.type === 'subscription' && o.value !== 'na');
+        if (firstPaidOption) setSelectedSubscription(firstPaidOption.id);
+      }
+    }
+  }, [selectedCMS, options]);
 
   if (!product) {
     return (
@@ -37,60 +124,29 @@ export default function ProductShopPage() {
   }
 
   // Group options by type
-  const groupedOptions = (product.options || []).reduce((acc, option) => {
-    if (!acc[option.type]) {
-      acc[option.type] = [];
-    }
-    acc[option.type]!.push(option);
-    return acc;
-  }, {} as Record<string, typeof product.options>);
+  const colourOptions = options.filter(o => o.type === 'colour');
+  const sizeOptions = options.filter(o => o.type === 'size');
+  const cmsOptions = options.filter(o => o.type === 'cms');
+  const subscriptionOptions = options.filter(o => o.type === 'subscription');
+
+  // Get selected CMS value to determine subscription visibility
+  const selectedCMSOption = options.find(o => o.id === selectedCMS);
+  const showSubscriptionOptions = selectedCMSOption?.value === 'yes';
 
   // Calculate total price
   const calculateTotal = () => {
     let total = product.price;
 
-    // Add selected options
-    Object.values(selectedOptions).forEach(optionId => {
-      const option = product.options?.find(opt => opt.id === optionId);
+    const selectedOptions = [selectedColour, selectedSize, selectedCMS, selectedSubscription];
+    selectedOptions.forEach(optionId => {
+      const option = options.find(o => o.id === optionId);
       if (option) total += option.price;
-    });
-
-    // Add accessories
-    selectedAccessories.forEach(accId => {
-      const accessory = product.options?.find(opt => opt.id === accId);
-      if (accessory) total += accessory.price;
     });
 
     return total * quantity;
   };
 
-  const handleOptionSelect = (type: string, optionId: string) => {
-    setSelectedOptions(prev => ({
-      ...prev,
-      [type]: optionId
-    }));
-  };
-
-  const handleAccessoryToggle = (optionId: string) => {
-    setSelectedAccessories(prev =>
-      prev.includes(optionId)
-        ? prev.filter(id => id !== optionId)
-        : [...prev, optionId]
-    );
-  };
-
   const handleAddToCart = () => {
-    // Check if all required options are selected (size, mounting, etc.)
-    const requiredTypes = ['size', 'mounting'];
-    const missingRequired = requiredTypes.filter(type => 
-      (groupedOptions[type]?.length ?? 0) > 0 && !selectedOptions[type]
-    );
-
-    if (missingRequired.length > 0) {
-      alert(`Please select: ${missingRequired.join(', ')}`);
-      return;
-    }
-
     // Add configured product to cart
     for (let i = 0; i < quantity; i++) {
       addItem(product);
@@ -100,9 +156,7 @@ export default function ProductShopPage() {
     router.push('/cart');
   };
 
-  const isConfigurationComplete = 
-    (!groupedOptions.size || selectedOptions.size) &&
-    (!groupedOptions.mounting || selectedOptions.mounting);
+  const isConfigurationComplete = selectedColour && selectedSize && selectedCMS && selectedSubscription;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -135,146 +189,128 @@ export default function ProductShopPage() {
               </p>
             </div>
 
-            {/* Size Options */}
-            {groupedOptions.size && groupedOptions.size.length > 0 && (
-              <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8">
-                <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-xl font-bold text-gray-900">Display Size</h2>
-                  <span className="text-sm text-red-600 font-medium">Required</span>
-                </div>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  {groupedOptions.size.map((option) => (
-                    <button
-                      key={option.id}
-                      onClick={() => handleOptionSelect('size', option.id)}
-                      className={`p-4 rounded-xl border-2 transition-all duration-300 ${
-                        selectedOptions.size === option.id
-                          ? 'border-blue-600 bg-blue-50 shadow-lg'
-                          : 'border-gray-200 hover:border-blue-300 hover:bg-gray-50'
-                      }`}
-                    >
-                      <div className="font-semibold text-gray-900">{option.label}</div>
-                      <div className="text-sm text-gray-600 mt-1">
-                        {option.price > 0 ? `+${formatPrice(option.price)}` : 'Included'}
-                      </div>
-                    </button>
-                  ))}
-                </div>
+            {/* Colour Options */}
+            <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-xl font-bold text-gray-900">Colour</h2>
+                <span className="text-sm text-red-600 font-medium">Required</span>
               </div>
-            )}
-
-            {/* Mounting Options */}
-            {groupedOptions.mounting && groupedOptions.mounting.length > 0 && (
-              <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8">
-                <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-xl font-bold text-gray-900">Mounting Type</h2>
-                  <span className="text-sm text-red-600 font-medium">Required</span>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {groupedOptions.mounting.map((option) => (
-                    <button
-                      key={option.id}
-                      onClick={() => handleOptionSelect('mounting', option.id)}
-                      className={`p-4 rounded-xl border-2 transition-all duration-300 text-left ${
-                        selectedOptions.mounting === option.id
-                          ? 'border-blue-600 bg-blue-50 shadow-lg'
-                          : 'border-gray-200 hover:border-blue-300 hover:bg-gray-50'
-                      }`}
-                    >
-                      <div className="font-semibold text-gray-900">{option.label}</div>
-                      <div className="text-sm text-gray-600 mt-1">
-                        {option.price > 0 ? `+${formatPrice(option.price)}` : 'Included'}
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* CMS Options */}
-            {groupedOptions.cms && groupedOptions.cms.length > 0 && (
-              <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8">
-                <h2 className="text-xl font-bold text-gray-900 mb-4">Content Management System</h2>
-                <div className="space-y-3">
-                  {groupedOptions.cms.map((option) => (
-                    <button
-                      key={option.id}
-                      onClick={() => handleOptionSelect('cms', option.id)}
-                      className={`w-full p-4 rounded-xl border-2 transition-all duration-300 text-left ${
-                        selectedOptions.cms === option.id
-                          ? 'border-blue-600 bg-blue-50 shadow-lg'
-                          : 'border-gray-200 hover:border-blue-300 hover:bg-gray-50'
-                      }`}
-                    >
-                      <div className="flex items-center justify-between">
-                        <div className="font-semibold text-gray-900">{option.label}</div>
-                        <div className="text-sm text-gray-600">
-                          {option.price > 0 ? `+${formatPrice(option.price)}` : 'Included'}
-                        </div>
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Accessories */}
-            {groupedOptions.accessory && groupedOptions.accessory.length > 0 && (
-              <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8">
-                <h2 className="text-xl font-bold text-gray-900 mb-4">Additional Accessories</h2>
-                <div className="space-y-3">
-                  {groupedOptions.accessory.map((option) => (
-                    <label
-                      key={option.id}
-                      className="flex items-center justify-between p-4 rounded-xl border-2 border-gray-200 hover:border-blue-300 hover:bg-gray-50 cursor-pointer transition-all duration-300"
-                    >
-                      <div className="flex items-center gap-3">
-                        <input
-                          type="checkbox"
-                          checked={selectedAccessories.includes(option.id)}
-                          onChange={() => handleAccessoryToggle(option.id)}
-                          className="w-5 h-5 text-blue-600 rounded focus:ring-blue-500"
-                        />
-                        <span className="font-medium text-gray-900">{option.label}</span>
-                      </div>
-                      <span className="text-gray-600">+{formatPrice(option.price)}</span>
-                    </label>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Installation */}
-            {groupedOptions.installation && groupedOptions.installation.length > 0 && (
-              <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8">
-                <h2 className="text-xl font-bold text-gray-900 mb-4">Professional Installation</h2>
-                {groupedOptions.installation.map((option) => (
-                  <label key={option.id} className="flex items-center justify-between p-4 rounded-xl border-2 border-gray-200 hover:border-blue-300 hover:bg-gray-50 cursor-pointer transition-all duration-300">
-                    <div className="flex items-center gap-3">
-                      <input
-                        type="checkbox"
-                        checked={selectedOptions.installation === option.id}
-                        onChange={() => handleOptionSelect('installation', option.id)}
-                        className="w-5 h-5 text-blue-600 rounded focus:ring-blue-500"
-                      />
-                      <div>
-                        <div className="font-medium text-gray-900">{option.label}</div>
-                        <div className="text-sm text-gray-600">Includes mounting, setup, and configuration</div>
-                      </div>
+              <div className="grid grid-cols-2 gap-4">
+                {colourOptions.map((option) => (
+                  <button
+                    key={option.id}
+                    onClick={() => setSelectedColour(option.id)}
+                    className={`p-4 rounded-xl border-2 transition-all duration-300 ${
+                      selectedColour === option.id
+                        ? 'border-blue-600 bg-blue-50 shadow-lg'
+                        : 'border-gray-200 hover:border-blue-300 hover:bg-gray-50'
+                    }`}
+                  >
+                    <div className="font-semibold text-gray-900">{option.label}</div>
+                    <div className="text-sm text-gray-600 mt-1">
+                      {option.price > 0 ? `+${formatPrice(option.price)}` : 'Included'}
                     </div>
-                    <span className="text-gray-600">+{formatPrice(option.price)}</span>
-                  </label>
+                  </button>
                 ))}
               </div>
-            )}
+            </div>
 
-            {/* No options configured message */}
-            {(!product.options || product.options.length === 0) && (
-              <div className="bg-white rounded-2xl shadow-lg p-12 text-center">
-                <p className="text-gray-600 mb-4">No configuration options available for this product.</p>
-                <p className="text-sm text-gray-500">Contact us for custom configurations.</p>
+            {/* Size Options */}
+            <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-xl font-bold text-gray-900">Display Size</h2>
+                <span className="text-sm text-red-600 font-medium">Required</span>
               </div>
-            )}
+              <div className="grid grid-cols-2 gap-4">
+                {sizeOptions.map((option) => (
+                  <button
+                    key={option.id}
+                    onClick={() => setSelectedSize(option.id)}
+                    className={`p-4 rounded-xl border-2 transition-all duration-300 ${
+                      selectedSize === option.id
+                        ? 'border-blue-600 bg-blue-50 shadow-lg'
+                        : 'border-gray-200 hover:border-blue-300 hover:bg-gray-50'
+                    }`}
+                  >
+                    <div className="font-semibold text-gray-900">{option.label}</div>
+                    <div className="text-sm text-gray-600 mt-1">
+                      {option.price > 0 ? `+${formatPrice(option.price)}` : 'Included'}
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* CMS Add On */}
+            <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-xl font-bold text-gray-900">CMS Add On</h2>
+                <span className="text-sm text-red-600 font-medium">Required</span>
+              </div>
+              <p className="text-sm text-gray-600 mb-4">
+                Add our Content Management System to easily update and schedule your display content remotely.
+              </p>
+              <div className="grid grid-cols-2 gap-4">
+                {cmsOptions.map((option) => (
+                  <button
+                    key={option.id}
+                    onClick={() => setSelectedCMS(option.id)}
+                    className={`p-4 rounded-xl border-2 transition-all duration-300 ${
+                      selectedCMS === option.id
+                        ? 'border-blue-600 bg-blue-50 shadow-lg'
+                        : 'border-gray-200 hover:border-blue-300 hover:bg-gray-50'
+                    }`}
+                  >
+                    <div className="font-semibold text-gray-900">{option.label}</div>
+                    <div className="text-sm text-gray-600 mt-1">
+                      {option.price > 0 ? `+${formatPrice(option.price)}` : 'No additional cost'}
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* CMS Subscription */}
+            <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-xl font-bold text-gray-900">CMS Subscription</h2>
+                <span className="text-sm text-red-600 font-medium">Required</span>
+              </div>
+              {!showSubscriptionOptions ? (
+                <div className="p-4 bg-gray-50 rounded-xl border-2 border-gray-200">
+                  <div className="font-semibold text-gray-900">N/A</div>
+                  <div className="text-sm text-gray-600 mt-1">
+                    Select "Yes" for CMS Add On to view subscription options
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <p className="text-sm text-gray-600 mb-4">
+                    Choose your subscription duration for ongoing CMS access and support.
+                  </p>
+                  <div className="space-y-3">
+                    {subscriptionOptions.filter(o => o.value !== 'na').map((option) => (
+                      <button
+                        key={option.id}
+                        onClick={() => setSelectedSubscription(option.id)}
+                        className={`w-full p-4 rounded-xl border-2 transition-all duration-300 text-left ${
+                          selectedSubscription === option.id
+                            ? 'border-blue-600 bg-blue-50 shadow-lg'
+                            : 'border-gray-200 hover:border-blue-300 hover:bg-gray-50'
+                        }`}
+                      >
+                        <div className="flex items-center justify-between">
+                          <div className="font-semibold text-gray-900">{option.label}</div>
+                          <div className="text-sm text-gray-600">
+                            {option.price > 0 ? `+${formatPrice(option.price)}` : 'Included'}
+                          </div>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
           </div>
 
           {/* Order Summary Sidebar */}
@@ -295,28 +331,36 @@ export default function ProductShopPage() {
 
               {/* Configuration Summary */}
               <div className="space-y-3 mb-6 text-sm">
-                {Object.entries(selectedOptions).map(([type, optionId]) => {
-                  const option = product.options?.find(opt => opt.id === optionId);
-                  if (!option) return null;
-                  return (
-                    <div key={type} className="flex justify-between">
-                      <span className="text-gray-600 capitalize">{type}:</span>
-                      <span className="font-medium text-gray-900">{option.label}</span>
-                    </div>
-                  );
-                })}
-                {selectedAccessories.length > 0 && (
-                  <div className="pt-3 border-t">
-                    <div className="text-gray-600 mb-2">Accessories:</div>
-                    {selectedAccessories.map(accId => {
-                      const accessory = product.options?.find(opt => opt.id === accId);
-                      if (!accessory) return null;
-                      return (
-                        <div key={accId} className="text-gray-900 text-xs ml-2">
-                          • {accessory.label}
-                        </div>
-                      );
-                    })}
+                {selectedColour && (
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Colour:</span>
+                    <span className="font-medium text-gray-900">
+                      {options.find(o => o.id === selectedColour)?.label}
+                    </span>
+                  </div>
+                )}
+                {selectedSize && (
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Size:</span>
+                    <span className="font-medium text-gray-900">
+                      {options.find(o => o.id === selectedSize)?.label}
+                    </span>
+                  </div>
+                )}
+                {selectedCMS && (
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">CMS Add On:</span>
+                    <span className="font-medium text-gray-900">
+                      {options.find(o => o.id === selectedCMS)?.label}
+                    </span>
+                  </div>
+                )}
+                {selectedSubscription && (
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">CMS Subscription:</span>
+                    <span className="font-medium text-gray-900">
+                      {options.find(o => o.id === selectedSubscription)?.label}
+                    </span>
                   </div>
                 )}
               </div>

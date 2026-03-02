@@ -15,10 +15,14 @@ export interface Product {
 export interface ProductOption {
   id: string;
   name: string;
-  type: 'size' | 'mounting' | 'accessory' | 'cms' | 'installation';
+  type: 'size' | 'mounting' | 'accessory' | 'cms' | 'installation' | 'colour' | 'subscription';
   value: string;
   label: string;
   price: number;
+  dependsOn?: {
+    type: string;
+    value: string;
+  };
 }
 
 export interface CartItem extends Product {
