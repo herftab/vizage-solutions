@@ -339,12 +339,21 @@ export default function ProductShopPage() {
               <h2 className="text-2xl font-bold mb-6 text-gray-900">Order Summary</h2>
 
               {/* Product Image */}
-              <div className="aspect-square bg-gradient-to-br from-gray-100 to-gray-200 rounded-xl flex items-center justify-center mb-6 overflow-hidden">
-                <img 
-                  src={product.image} 
-                  alt={product.name}
-                  className="w-full h-full object-contain p-8"
-                />
+              <div className="relative aspect-square bg-gradient-to-br from-blue-50 via-white to-cyan-50 rounded-xl flex items-center justify-center mb-6 overflow-hidden">
+                {/* Decorative Background Elements */}
+                <div className="absolute inset-0 opacity-30">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-200 to-cyan-200 rounded-full blur-3xl"></div>
+                  <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-blue-100 to-cyan-100 rounded-full blur-2xl"></div>
+                </div>
+                
+                {/* Image Container with Shadow */}
+                <div className="relative w-full h-full p-8 flex items-center justify-center">
+                  <img 
+                    src={product.image} 
+                    alt={product.name}
+                    className="w-full h-full object-contain drop-shadow-2xl"
+                  />
+                </div>
               </div>
 
               <h3 className="font-semibold text-lg mb-4 text-gray-900">{product.name}</h3>

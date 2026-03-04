@@ -184,12 +184,21 @@ export default function ProductDetailPage() {
             {/* Middle Column - Gallery */}
             <div className="lg:col-span-1 space-y-4">
               {/* Main Image Display */}
-              <div className="aspect-square bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl flex items-center justify-center shadow-xl overflow-hidden">
-                <img 
-                  src={allImages[selectedImage]} 
-                  alt={`${product.name} - Image ${selectedImage + 1}`}
-                  className="w-full h-full object-contain p-8"
-                />
+              <div className="relative aspect-square bg-gradient-to-br from-blue-50 via-white to-cyan-50 rounded-2xl flex items-center justify-center shadow-xl overflow-hidden">
+                {/* Decorative Background Elements */}
+                <div className="absolute inset-0 opacity-30">
+                  <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-blue-200 to-cyan-200 rounded-full blur-3xl"></div>
+                  <div className="absolute bottom-0 left-0 w-32 h-32 bg-gradient-to-tr from-blue-100 to-cyan-100 rounded-full blur-2xl"></div>
+                </div>
+                
+                {/* Image Container with Shadow */}
+                <div className="relative w-full h-full p-8 flex items-center justify-center">
+                  <img 
+                    src={allImages[selectedImage]} 
+                    alt={`${product.name} - Image ${selectedImage + 1}`}
+                    className="w-full h-full object-contain drop-shadow-2xl transition-all duration-500"
+                  />
+                </div>
               </div>
               
               {/* Gallery Thumbnails */}

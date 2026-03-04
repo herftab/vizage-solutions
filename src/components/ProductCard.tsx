@@ -14,12 +14,24 @@ export default function ProductCard({ product, hideLearnMore = false }: ProductC
   return (
     <div className="premium-card rounded-2xl overflow-hidden group">
       <Link href={`/products/${product.id}`}>
-        <div className="h-64 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center cursor-pointer overflow-hidden relative">
-          <img 
-            src={product.image} 
-            alt={product.name}
-            className="w-full h-full object-contain p-4 transform group-hover:scale-110 transition-transform duration-300"
-          />
+        <div className="relative h-64 bg-gradient-to-br from-blue-50 via-white to-cyan-50 flex items-center justify-center cursor-pointer overflow-hidden">
+          {/* Decorative Background Elements */}
+          <div className="absolute inset-0 opacity-30">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-200 to-cyan-200 rounded-full blur-3xl"></div>
+            <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-blue-100 to-cyan-100 rounded-full blur-2xl"></div>
+          </div>
+          
+          {/* Image Container with Shadow */}
+          <div className="relative w-full h-full p-4 flex items-center justify-center">
+            <img 
+              src={product.image} 
+              alt={product.name}
+              className="w-full h-full object-contain drop-shadow-2xl group-hover:scale-110 group-hover:drop-shadow-[0_20px_40px_rgba(59,130,246,0.3)] transition-all duration-700 ease-out"
+            />
+          </div>
+          
+          {/* Shine Effect on Hover */}
+          <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white to-transparent opacity-0 group-hover:opacity-20 transform -translate-x-full group-hover:translate-x-full transition-all duration-1000 ease-out"></div>
         </div>
       </Link>
       
