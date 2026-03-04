@@ -66,6 +66,17 @@ export default function Header() {
             </Link>
             
             <Link 
+              href="/industries" 
+              className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ${
+                isActive('/industries') || pathname.startsWith('/industries/')
+                  ? 'text-blue-600 bg-blue-50' 
+                  : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'
+              }`}
+            >
+              Industries
+            </Link>
+            
+            <Link 
               href="/services" 
               className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ${
                 isActive('/services') 
@@ -187,6 +198,17 @@ export default function Header() {
                 }`}
               >
                 Digital Canvas
+              </Link>
+              
+              <Link 
+                href="/industries" 
+                className={`px-4 py-3 rounded-lg font-medium transition-all ${
+                  isActive('/industries') || pathname.startsWith('/industries/')
+                    ? 'text-blue-600 bg-blue-50' 
+                    : 'text-gray-700 hover:bg-gray-50'
+                }`}
+              >
+                Industries
               </Link>
               
               <Link 

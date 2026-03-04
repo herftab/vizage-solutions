@@ -111,6 +111,269 @@ export default function Home() {
         </div>
       </section>
 
+
+      {/* The Challenge Section - NEW */}
+      <section className="py-16 md:py-24 bg-gradient-to-br from-gray-50 to-white relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-blue-50/50 to-transparent pointer-events-none"></div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center mb-12 md:mb-16">
+            <div className="inline-block mb-4 px-6 py-2 bg-blue-100 rounded-full">
+              <p className="text-sm font-semibold text-blue-700 tracking-wider">THE CHALLENGE</p>
+            </div>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 text-gray-900">
+              Your Business Deserves Better <span className="gradient-text">Than Compromise</span>
+            </h2>
+            <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              Every business faces unique space and engagement challenges. We don't just sell displays—we solve problems.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+            {[
+              {
+                icon: (
+                  <svg className="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+                  </svg>
+                ),
+                title: 'Floor Space vs Product Range',
+                problem: 'Cannot show everything without cluttering',
+                solution: 'Digital catalogues with infinite inventory display',
+                color: 'from-blue-500 to-cyan-500'
+              },
+              {
+                icon: (
+                  <svg className="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  </svg>
+                ),
+                title: 'Closed Doors, Lost Revenue',
+                problem: 'Prime evening foot traffic, zero sales',
+                solution: 'Window displays that sell whilst you sleep',
+                color: 'from-purple-500 to-pink-500'
+              },
+              {
+                icon: (
+                  <svg className="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                ),
+                title: 'Static Signage Fatigue',
+                problem: 'Same posters, declining impact',
+                solution: 'Dynamic content that stays fresh',
+                color: 'from-orange-500 to-red-500'
+              }
+            ].map((challenge, index) => (
+              <div key={index} className="group relative bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden">
+                <div className={`absolute inset-0 bg-gradient-to-br ${challenge.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}></div>
+                <div className={`absolute top-0 left-0 w-1 h-0 bg-gradient-to-b ${challenge.color} group-hover:h-full transition-all duration-500`}></div>
+                
+                <div className="relative z-10">
+                  <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${challenge.color} p-3 mb-6 transform group-hover:scale-110 transition-transform duration-300`}>
+                    <div className="w-full h-full text-white">
+                      {challenge.icon}
+                    </div>
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">{challenge.title}</h3>
+                  <div className="space-y-3">
+                    <div>
+                      <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">Problem</p>
+                      <p className="text-gray-600 text-sm">{challenge.problem}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold text-blue-600 uppercase tracking-wide mb-1">Our Solution</p>
+                      <p className="text-gray-900 font-medium text-sm">{challenge.solution}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* We Ask Different Questions Section - NEW */}
+      <section className="py-16 md:py-24 bg-white relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12 md:mb-16">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 text-gray-900">
+              We Ask <span className="gradient-text">Different Questions</span>
+            </h2>
+            <p className="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto mb-8">
+              Instead of "What do you want to buy?"<br />
+              <span className="font-semibold text-blue-600">We ask: "What's holding your business back?"</span>
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              {
+                question: 'How can we help you reclaim valuable floor space?',
+                icon: (
+                  <svg className="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                  </svg>
+                )
+              },
+              {
+                question: 'What if your shop could sell 24/7, even when closed?',
+                icon: (
+                  <svg className="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                )
+              },
+              {
+                question: 'How do we turn browsers into buyers?',
+                icon: (
+                  <svg className="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                  </svg>
+                )
+              }
+            ].map((item, index) => (
+              <div key={index} className="text-center">
+                <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 p-4 shadow-lg">
+                  <div className="w-full h-full text-white">
+                    {item.icon}
+                  </div>
+                </div>
+                <p className="text-lg font-semibold text-gray-800 leading-relaxed">{item.question}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+
+      {/* Real Scenarios Section - NEW */}
+      <section className="py-16 md:py-24 bg-gradient-to-br from-blue-50 to-cyan-50 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-30">
+          <div className="absolute top-20 left-10 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-cyan-400 rounded-full mix-blend-multiply filter blur-3xl animate-pulse" style={{animationDelay: '700ms'}}></div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center mb-12 md:mb-16">
+            <div className="inline-block mb-4 px-6 py-2 bg-white/80 backdrop-blur-sm rounded-full shadow-sm">
+              <p className="text-sm font-semibold text-blue-700 tracking-wider">REAL SOLUTIONS</p>
+            </div>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 text-gray-900">
+              Real Scenarios, <span className="gradient-text">Real Solutions</span>
+            </h2>
+            <p className="text-lg md:text-xl text-gray-700 max-w-3xl mx-auto">
+              See how we've helped businesses like yours overcome their challenges
+            </p>
+          </div>
+
+          <div className="space-y-8">
+            {[
+              {
+                title: 'The Boutique Challenge',
+                problem: '"Our clothing racks take up 60% of floor space, but customers want room to browse"',
+                solution: 'Digital lookbooks on wall-mounted displays',
+                result: '40% more floor space, same product visibility',
+                icon: (
+                  <svg className="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                  </svg>
+                ),
+                color: 'from-purple-500 to-pink-500'
+              },
+              {
+                title: 'The After-Hours Opportunity',
+                problem: '"We close at 6pm but foot traffic peaks at 8pm"',
+                solution: 'Window-facing double-sided displays with QR codes',
+                result: '24/7 sales without staffing costs',
+                icon: (
+                  <svg className="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                  </svg>
+                ),
+                color: 'from-blue-500 to-cyan-500'
+              },
+              {
+                title: 'The Engagement Gap',
+                problem: '"Customers walk past without stopping"',
+                solution: 'Interactive displays with product browsing',
+                result: '3x longer dwell time, higher conversion',
+                icon: (
+                  <svg className="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
+                  </svg>
+                ),
+                color: 'from-orange-500 to-red-500'
+              }
+            ].map((scenario, index) => (
+              <div key={index} className="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-500">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
+                  <div className={`lg:col-span-1 bg-gradient-to-br ${scenario.color} flex items-center justify-center p-6`}>
+                    <div className="w-12 h-12 text-white">
+                      {scenario.icon}
+                    </div>
+                  </div>
+                  
+                  <div className="lg:col-span-11 p-6 md:p-8">
+                    <h3 className="text-2xl font-bold text-gray-900 mb-4">{scenario.title}</h3>
+                    
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                      <div>
+                        <div className="flex items-start gap-2 mb-2">
+                          <svg className="w-5 h-5 text-red-500 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                          </svg>
+                          <div>
+                            <p className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Problem</p>
+                            <p className="text-gray-700 italic mt-1">{scenario.problem}</p>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <div className="flex items-start gap-2 mb-2">
+                          <svg className="w-5 h-5 text-blue-500 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd" />
+                          </svg>
+                          <div>
+                            <p className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Solution</p>
+                            <p className="text-gray-700 font-medium mt-1">{scenario.solution}</p>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <div className="flex items-start gap-2 mb-2">
+                          <svg className="w-5 h-5 text-green-500 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                          </svg>
+                          <div>
+                            <p className="text-sm font-semibold text-gray-500 uppercase tracking-wide">Result</p>
+                            <p className="text-gray-900 font-bold mt-1">{scenario.result}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center mt-12">
+            <Link 
+              href="/contact"
+              className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all duration-300 hover:scale-105"
+            >
+              Let's Explore Your Space Together
+              <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Services Section - Premium with Staggered Animation */}
       <section className="py-12 md:py-24 bg-white relative overflow-hidden">
         {/* Subtle background decoration */}

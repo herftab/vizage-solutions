@@ -10,7 +10,7 @@ export default function DigitalCanvasPage() {
   return (
     <div className="overflow-hidden">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-gray-900 via-purple-900 to-black text-white py-20 md:py-32 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-gray-900 via-purple-900 to-black text-white py-20 md:py-32 pb-32 md:pb-40 overflow-hidden">
         <div className="absolute inset-0 opacity-20">
           <div className="absolute top-20 left-10 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl animate-pulse"></div>
           <div className="absolute bottom-20 right-10 w-96 h-96 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl animate-pulse" style={{animationDelay: '700ms'}}></div>

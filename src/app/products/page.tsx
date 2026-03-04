@@ -17,7 +17,7 @@ export default function ProductsPage() {
   return (
     <div className="overflow-hidden">
       {/* Hero Section with Background Image */}
-      <section className="relative text-white py-20 md:py-32 overflow-hidden">
+      <section className="relative text-white py-20 md:py-32 pb-32 md:pb-40 overflow-hidden">
         {/* Background Image with Overlay - positioned to show the screens */}
         <div className="absolute inset-0">
           <div 
@@ -56,6 +56,283 @@ export default function ProductsPage() {
           <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M0 120L60 105C120 90 240 60 360 45C480 30 600 30 720 37.5C840 45 960 60 1080 67.5C1200 75 1320 75 1380 75L1440 75V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="white"/>
           </svg>
+        </div>
+      </section>
+
+      {/* The Space Problem Section - NEW */}
+      <section className="py-16 md:py-24 bg-white relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-1/3 h-full bg-gradient-to-r from-blue-50/50 to-transparent pointer-events-none"></div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center mb-12 md:mb-16">
+            <div className="inline-block mb-4 px-6 py-2 bg-blue-100 rounded-full">
+              <p className="text-sm font-semibold text-blue-700 tracking-wider">THE CHALLENGE</p>
+            </div>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 text-gray-900">
+              Your Business Deserves Better <span className="gradient-text">Than Compromise</span>
+            </h2>
+            <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+              Every business faces unique space and engagement challenges. We don't just sell displays—we solve problems.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+            {[
+              {
+                icon: (
+                  <svg className="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 5a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM14 5a1 1 0 011-1h4a1 1 0 011 1v7a1 1 0 01-1 1h-4a1 1 0 01-1-1V5zM4 16a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1H5a1 1 0 01-1-1v-3zM14 16a1 1 0 011-1h4a1 1 0 011 1v3a1 1 0 01-1 1h-4a1 1 0 01-1-1v-3z" />
+                  </svg>
+                ),
+                title: 'Floor Space vs Product Range',
+                problem: 'Cannot show everything without cluttering',
+                solution: 'Digital catalogues with infinite inventory display',
+                color: 'from-blue-500 to-cyan-500'
+              },
+              {
+                icon: (
+                  <svg className="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  </svg>
+                ),
+                title: 'Closed Doors, Lost Revenue',
+                problem: 'Prime evening foot traffic, zero sales',
+                solution: 'Window displays that sell while you sleep',
+                color: 'from-purple-500 to-pink-500'
+              },
+              {
+                icon: (
+                  <svg className="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                ),
+                title: 'Static Signage Fatigue',
+                problem: 'Same posters, declining impact',
+                solution: 'Dynamic content that stays fresh',
+                color: 'from-orange-500 to-red-500'
+              }
+            ].map((challenge, index) => (
+              <div key={index} className="group relative bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden">
+                <div className={`absolute inset-0 bg-gradient-to-br ${challenge.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}></div>
+                <div className={`absolute top-0 left-0 w-1 h-0 bg-gradient-to-b ${challenge.color} group-hover:h-full transition-all duration-500`}></div>
+                
+                <div className="relative z-10">
+                  <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${challenge.color} p-3 mb-6 transform group-hover:scale-110 transition-transform duration-300`}>
+                    <div className="w-full h-full text-white">
+                      {challenge.icon}
+                    </div>
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">{challenge.title}</h3>
+                  <div className="space-y-3">
+                    <div>
+                      <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1">Problem</p>
+                      <p className="text-gray-600 text-sm">{challenge.problem}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs font-semibold text-blue-600 uppercase tracking-wide mb-1">Our Solution</p>
+                      <p className="text-gray-900 font-medium text-sm">{challenge.solution}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Space Transformation Section - NEW */}
+      <section className="py-16 md:py-24 bg-gradient-to-br from-gray-50 to-white relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12 md:mb-16">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 text-gray-900">
+              How We <span className="gradient-text">Transform Spaces</span>
+            </h2>
+            <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+              From cluttered to captivating—see the difference digital signage makes
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+            <div className="space-y-6">
+              <div className="bg-white rounded-2xl p-8 shadow-lg border-l-4 border-red-500">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0">
+                    <svg className="w-6 h-6 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">Before</h3>
+                    <ul className="space-y-2 text-gray-600">
+                      <li className="flex items-start">
+                        <span className="text-red-500 mr-2">•</span>
+                        Cluttered racks taking 60% of floor space
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-red-500 mr-2">•</span>
+                        Limited product visibility
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-red-500 mr-2">•</span>
+                        Customers struggling to browse
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-red-500 mr-2">•</span>
+                        Static posters losing impact
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white rounded-2xl p-8 shadow-lg border-l-4 border-green-500">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+                    <svg className="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">After</h3>
+                    <ul className="space-y-2 text-gray-600">
+                      <li className="flex items-start">
+                        <span className="text-green-500 mr-2">✓</span>
+                        Open floor with digital browsing stations
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-green-500 mr-2">✓</span>
+                        Entire catalogue accessible digitally
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-green-500 mr-2">✓</span>
+                        Enhanced customer experience
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-green-500 mr-2">✓</span>
+                        Dynamic, engaging content
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-gradient-to-br from-blue-600 to-cyan-600 rounded-2xl p-8 md:p-12 text-white shadow-2xl">
+              <div className="mb-6">
+                <div className="inline-block px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full mb-4">
+                  <p className="text-sm font-semibold tracking-wider">THE IMPACT</p>
+                </div>
+                <h3 className="text-3xl font-bold mb-4">Real Results</h3>
+              </div>
+              
+              <div className="space-y-6">
+                <div className="flex items-start gap-4">
+                  <div className="w-16 h-16 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center flex-shrink-0">
+                    <span className="text-3xl font-bold">40%</span>
+                  </div>
+                  <div>
+                    <p className="font-semibold mb-1">More Floor Space</p>
+                    <p className="text-blue-100 text-sm">Same product visibility, better flow</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="w-16 h-16 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center flex-shrink-0">
+                    <span className="text-3xl font-bold">3x</span>
+                  </div>
+                  <div>
+                    <p className="font-semibold mb-1">Longer Dwell Time</p>
+                    <p className="text-blue-100 text-sm">Customers stay and engage longer</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="w-16 h-16 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center flex-shrink-0">
+                    <span className="text-3xl font-bold">24/7</span>
+                  </div>
+                  <div>
+                    <p className="font-semibold mb-1">Sales Opportunity</p>
+                    <p className="text-blue-100 text-sm">Never miss a sale, even when closed</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 24/7 Revenue Model Section - NEW */}
+      <section className="py-16 md:py-24 bg-gradient-to-br from-blue-900 via-blue-800 to-cyan-900 text-white relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-20 left-10 w-96 h-96 bg-cyan-400 rounded-full mix-blend-overlay filter blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-blue-400 rounded-full mix-blend-overlay filter blur-3xl animate-pulse" style={{animationDelay: '1000ms'}}></div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center mb-12 md:mb-16">
+            <div className="inline-block mb-4 px-6 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
+              <p className="text-sm font-semibold tracking-wider">REVENUE OPPORTUNITY</p>
+            </div>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6">
+              What If Your Shop <span className="text-cyan-300">Never Closed?</span>
+            </h2>
+            <p className="text-lg md:text-xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
+              Window displays with QR codes turn after-hours browsers into buyers
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+            {[
+              {
+                time: '9am - 6pm',
+                title: 'Traditional Sales',
+                desc: 'In-store customer service and sales',
+                icon: (
+                  <svg className="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                  </svg>
+                )
+              },
+              {
+                time: '6pm - 11pm',
+                title: 'Window Display + QR Sales',
+                desc: 'Automated sales during peak foot traffic',
+                icon: (
+                  <svg className="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 18h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                  </svg>
+                )
+              },
+              {
+                time: '11pm - 9am',
+                title: 'Automated Browsing',
+                desc: 'Product discovery for early risers',
+                icon: (
+                  <svg className="w-full h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                  </svg>
+                )
+              }
+            ].map((period, index) => (
+              <div key={index} className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 hover:bg-white/15 transition-all duration-300">
+                <div className="w-12 h-12 rounded-xl bg-cyan-400/20 p-2 mb-4">
+                  <div className="w-full h-full text-cyan-300">
+                    {period.icon}
+                  </div>
+                </div>
+                <div className="text-cyan-300 font-bold text-sm mb-2">{period.time}</div>
+                <h3 className="text-xl font-bold mb-2">{period.title}</h3>
+                <p className="text-blue-100 text-sm">{period.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 text-center">
+            <p className="text-xl md:text-2xl font-semibold mb-2">Real Example</p>
+            <p className="text-lg text-blue-100">
+              "A local retailer added <span className="text-cyan-300 font-bold text-2xl">£2,400/month</span> in after-hours sales with one double-sided window display"
+            </p>
+          </div>
         </div>
       </section>
 
