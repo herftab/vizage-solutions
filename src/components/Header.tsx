@@ -1,13 +1,10 @@
 'use client';
 
 import Link from 'next/link';
-import { useCartStore } from '@/lib/store';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
 export default function Header() {
-  const items = useCartStore((state) => state.items);
-  const cartCount = items.reduce((sum, item) => sum + item.quantity, 0);
   const pathname = usePathname();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -88,17 +85,6 @@ export default function Header() {
             </Link>
             
             <Link 
-              href="/shop" 
-              className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ${
-                isActive('/shop') 
-                  ? 'text-blue-600 bg-blue-50' 
-                  : 'text-gray-700 hover:text-blue-600 hover:bg-gray-50'
-              }`}
-            >
-              Shop
-            </Link>
-            
-            <Link 
               href="/about" 
               className={`px-4 py-2 rounded-lg font-medium transition-all duration-300 ${
                 isActive('/about') 
@@ -118,33 +104,10 @@ export default function Header() {
             >
               Contact
             </Link>
-            <Link 
-              href="/cart" 
-              className="relative ml-4 px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:shadow-lg hover:scale-105 transition-all duration-300"
-            >
-              <span className="text-lg">🛒</span>
-              {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center animate-pulse">
-                  {cartCount}
-                </span>
-              )}
-            </Link>
           </div>
 
-          {/* Mobile Menu Button & Cart */}
-          <div className="flex lg:hidden items-center space-x-3">
-            <Link 
-              href="/cart" 
-              className="relative px-3 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg"
-            >
-              <span className="text-lg">🛒</span>
-              {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center animate-pulse">
-                  {cartCount}
-                </span>
-              )}
-            </Link>
-            
+          {/* Mobile Menu Button */}
+          <div className="flex lg:hidden items-center">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors"
@@ -220,17 +183,6 @@ export default function Header() {
                 }`}
               >
                 Services
-              </Link>
-              
-              <Link 
-                href="/shop" 
-                className={`px-4 py-3 rounded-lg font-medium transition-all ${
-                  isActive('/shop') 
-                    ? 'text-blue-600 bg-blue-50' 
-                    : 'text-gray-700 hover:bg-gray-50'
-                }`}
-              >
-                Shop
               </Link>
               
               <Link 

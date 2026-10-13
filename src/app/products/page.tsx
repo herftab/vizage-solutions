@@ -686,7 +686,7 @@ export default function ProductsPage() {
               </svg>
             </Link>
             <Link 
-              href="/shop"
+              href="/products"
               className="inline-flex items-center justify-center px-10 py-4 bg-white text-blue-600 font-semibold rounded-xl border-2 border-blue-600 hover:bg-blue-50 transition-all duration-300"
             >
               View All Products

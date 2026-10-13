@@ -521,7 +521,7 @@ export default function DigitalCanvasPage() {
               </svg>
             </Link>
             <Link 
-              href="/shop"
+              href="/products"
               className="inline-flex items-center justify-center px-10 py-4 bg-transparent text-white font-semibold rounded-xl border-2 border-white hover:bg-white hover:text-purple-700 transition-all duration-300"
             >
               View All Products

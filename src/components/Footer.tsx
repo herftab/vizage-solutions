@@ -56,12 +56,7 @@ export default function Footer() {
                   Contact
                 </Link>
               </li>
-              <li>
-                <Link href="/cart" className="text-gray-300 hover:text-blue-400 transition-colors duration-300 flex items-center group">
-                  <span className="mr-2 transform group-hover:translate-x-1 transition-transform duration-300">→</span>
-                  Shopping Cart
-                </Link>
-              </li>
+
             </ul>
           </div>
           
