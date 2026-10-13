@@ -353,30 +353,6 @@ export default function DigitalCanvasPage() {
         </div>
       </section>
 
-      {/* Products Section */}
-      <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-gray-900">
-              Our <span className="gradient-text">Digital Canvas</span> Collection
-            </h2>
-            <p className="text-xl text-gray-600">Choose the perfect canvas for your space</p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {canvasProducts.length > 0 ? (
-              canvasProducts.map((product) => (
-                <ProductCard key={product.id} product={product} hideLearnMore={true} />
-              ))
-            ) : (
-              <div className="col-span-2 text-center py-12">
-                <p className="text-gray-600">No Digital Canvas products available at the moment.</p>
-              </div>
-            )}
-          </div>
-        </div>
-      </section>
-
       {/* Ideal Applications */}
       <section className="py-12 md:py-20 bg-gradient-to-br from-purple-50 via-pink-50 to-blue-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
